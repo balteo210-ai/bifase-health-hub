@@ -13,6 +13,7 @@ export interface Service {
   providerName: string;
   location: string;
   type: string;
+  price: number;
   slots: TimeSlot[];
 }
 
@@ -24,6 +25,8 @@ export interface Appointment {
   location: string;
   time: string;
   date: string;
+  price: number;
+  commission: number;
   status: 'confirmed' | 'cancelled';
 }
 
@@ -33,7 +36,10 @@ export interface User {
   role: 'citizen' | 'provider';
   businessName?: string;
   serviceType?: string;
+  subscribed?: boolean;
 }
+
+const COMMISSION_RATE = 0.02;
 
 // Mock services data
 const mockServices: Service[] = [
@@ -43,6 +49,7 @@ const mockServices: Service[] = [
     providerName: 'Dott.ssa Sara Martini',
     location: 'Milano Centro',
     type: 'Medicina Generale',
+    price: 80,
     slots: [
       { id: 's1', time: '09:00', available: true },
       { id: 's2', time: '09:30', available: false },
@@ -59,6 +66,7 @@ const mockServices: Service[] = [
     providerName: 'Studio Dentistico Luce',
     location: 'Roma Prati',
     type: 'Odontoiatria',
+    price: 120,
     slots: [
       { id: 's8', time: '08:00', available: true },
       { id: 's9', time: '08:30', available: true },
@@ -73,6 +81,7 @@ const mockServices: Service[] = [
     providerName: 'Farmacia Centrale',
     location: 'Napoli Centro',
     type: 'Farmacia',
+    price: 5,
     slots: [
       { id: 's13', time: '09:00', available: true },
       { id: 's14', time: '10:00', available: true },
@@ -87,6 +96,7 @@ const mockServices: Service[] = [
     providerName: 'Fisio Plus',
     location: 'Torino Centro',
     type: 'Fisioterapia',
+    price: 65,
     slots: [
       { id: 's18', time: '08:00', available: false },
       { id: 's19', time: '09:00', available: true },
@@ -101,6 +111,7 @@ const mockServices: Service[] = [
     providerName: 'Dott. Pietro Bianchi',
     location: 'Firenze Centro',
     type: 'Oculistica',
+    price: 95,
     slots: [
       { id: 's23', time: '09:30', available: true },
       { id: 's24', time: '10:30', available: true },
@@ -118,7 +129,8 @@ interface AppState {
   providerAppointments: Appointment[];
   login: (user: User) => void;
   logout: () => void;
-  bookAppointment: (serviceId: string, slotId: string) => void;
+  subscribe: () => void;
+  bookAppointment: (serviceId: string, slotId: string, date: string) => void;
   cancelAppointment: (appointmentId: string) => void;
   addProviderService: (service: Omit<Service, 'id'>) => void;
   removeProviderService: (serviceId: string) => void;
@@ -135,6 +147,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       providerName: 'La Mia Clinica',
       location: 'Milano Centro',
       type: 'Medicina Generale',
+      price: 75,
       slots: [
         { id: 'ps1', time: '09:00', available: true },
         { id: 'ps2', time: '10:00', available: true },
@@ -152,29 +165,28 @@ export const useAppStore = create<AppState>((set, get) => ({
       providerName: 'La Mia Clinica',
       location: 'Milano Centro',
       time: '11:00',
-      date: 'Oggi',
+      date: '2026-03-27',
+      price: 75,
+      commission: 75 * COMMISSION_RATE,
       status: 'confirmed',
     },
   ],
 
   login: (user) => set({ user }),
   logout: () => set({ user: null }),
+  subscribe: () => set((state) => ({
+    user: state.user ? { ...state.user, subscribed: true } : null,
+  })),
 
-  bookAppointment: (serviceId, slotId) => {
+  bookAppointment: (serviceId, slotId, date) => {
     const { services, appointments } = get();
     const service = services.find((s) => s.id === serviceId);
     const slot = service?.slots.find((s) => s.id === slotId);
     if (!service || !slot) return;
 
-    // Mark slot as unavailable
     const updatedServices = services.map((s) =>
       s.id === serviceId
-        ? {
-            ...s,
-            slots: s.slots.map((sl) =>
-              sl.id === slotId ? { ...sl, available: false } : sl
-            ),
-          }
+        ? { ...s, slots: s.slots.map((sl) => sl.id === slotId ? { ...sl, available: false } : sl) }
         : s
     );
 
@@ -185,7 +197,9 @@ export const useAppStore = create<AppState>((set, get) => ({
       providerName: service.providerName,
       location: service.location,
       time: slot.time,
-      date: 'Oggi',
+      date,
+      price: service.price,
+      commission: service.price * COMMISSION_RATE,
       status: 'confirmed',
     };
 
@@ -197,19 +211,13 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   cancelAppointment: (appointmentId) => {
     const { appointments, services, providerAppointments } = get();
-    const appointment = appointments.find((a) => a.id === appointmentId) || 
+    const appointment = appointments.find((a) => a.id === appointmentId) ||
                         providerAppointments.find((a) => a.id === appointmentId);
     if (!appointment) return;
 
-    // Smart Slot Recovery: mark the slot as available again
     const updatedServices = services.map((s) =>
       s.id === appointment.serviceId
-        ? {
-            ...s,
-            slots: s.slots.map((sl) =>
-              sl.time === appointment.time ? { ...sl, available: true } : sl
-            ),
-          }
+        ? { ...s, slots: s.slots.map((sl) => sl.time === appointment.time ? { ...sl, available: true } : sl) }
         : s
     );
 
@@ -237,3 +245,6 @@ export const useAppStore = create<AppState>((set, get) => ({
     }));
   },
 }));
+
+export const SUBSCRIPTION_PRICE = 359;
+export { COMMISSION_RATE };
