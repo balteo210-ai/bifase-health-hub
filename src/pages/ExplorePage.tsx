@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import BifaseLogo from '@/components/BifaseLogo';
-import { Search, MapPin, Star, Clock, Phone, ArrowRight } from 'lucide-react';
+import { Search, MapPin, Star, Clock, Phone, ArrowRight, Navigation, Loader2 } from 'lucide-react';
+import { useGeolocation, getDistanceKm, CITY_COORDS } from '@/hooks/use-geolocation';
 
 interface Provider {
   id: string;
@@ -13,6 +14,8 @@ interface Provider {
   category: string;
   location: string;
   address: string;
+  lat: number;
+  lng: number;
   rating: number;
   reviews: number;
   phone: string;
