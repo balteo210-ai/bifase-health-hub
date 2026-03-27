@@ -1,21 +1,23 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Calendar } from '@/components/ui/calendar';
 import { useAppStore } from '@/lib/store';
-import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck } from 'lucide-react';
+import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck, Navigation, Loader2 } from 'lucide-react';
 import BifaseLogo from '@/components/BifaseLogo';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { useGeolocation, getDistanceKm } from '@/hooks/use-geolocation';
 
 const CitizenDashboard = () => {
   const { user, services, appointments, bookAppointment, cancelAppointment, logout } = useAppStore();
   const navigate = useNavigate();
+  const location = useGeolocation();
   const [search, setSearch] = useState('');
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
@@ -25,12 +27,22 @@ const CitizenDashboard = () => {
 
   if (!user) { navigate('/role-select'); return null; }
 
-  const filteredServices = services.filter(
-    (s) =>
-      s.name.toLowerCase().includes(search.toLowerCase()) ||
-      s.providerName.toLowerCase().includes(search.toLowerCase()) ||
-      s.location.toLowerCase().includes(search.toLowerCase())
-  );
+  const servicesWithDistance = useMemo(() => {
+    if (!location.lat && !location.lng) return services.map((s) => ({ ...s, distance: null as number | null }));
+    return services.map((s) => ({
+      ...s,
+      distance: getDistanceKm(location.lat, location.lng, s.lat, s.lng),
+    }));
+  }, [services, location.lat, location.lng]);
+
+  const filteredServices = servicesWithDistance
+    .filter(
+      (s) =>
+        s.name.toLowerCase().includes(search.toLowerCase()) ||
+        s.providerName.toLowerCase().includes(search.toLowerCase()) ||
+        s.location.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => (a.distance ?? 9999) - (b.distance ?? 9999));
 
   const activeAppointments = appointments.filter((a) => a.status === 'confirmed');
 
@@ -90,9 +102,29 @@ const CitizenDashboard = () => {
           </div>
         </motion.div>
 
+        {/* Location indicator */}
+        <motion.div
+          className="mb-6 flex items-center gap-2 text-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          {location.loading ? (
+            <span className="flex items-center gap-2 text-muted-foreground">
+              <Loader2 className="h-4 w-4 animate-spin" /> Rilevamento posizione...
+            </span>
+          ) : (
+            <span className="flex items-center gap-2 text-muted-foreground">
+              <Navigation className="h-4 w-4 text-primary" />
+              <span>Posizione: <span className="font-medium text-foreground">{location.city || 'Italia'}</span></span>
+              <span className="text-xs">· Servizi ordinati per distanza</span>
+            </span>
+          )}
+        </motion.div>
+
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <h2 className="mb-5 font-display text-xl font-bold text-foreground">Servizi disponibili</h2>
+            <h2 className="mb-5 font-display text-xl font-bold text-foreground">Servizi vicino a te</h2>
             <div className="space-y-4">
               {filteredServices.map((service, i) => (
                 <motion.div
