@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Calendar } from '@/components/ui/calendar';
 import { useAppStore, COMMISSION_RATE } from '@/lib/store';
-import { Search, MapPin, Clock, LogOut, X, CheckCircle2, Euro, CreditCard, ShieldCheck } from 'lucide-react';
+import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck } from 'lucide-react';
 import BifaseLogo from '@/components/BifaseLogo';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -35,8 +35,6 @@ const CitizenDashboard = () => {
   const activeAppointments = appointments.filter((a) => a.status === 'confirmed');
 
   const currentService = selectedSlot ? services.find((s) => s.id === selectedSlot.serviceId) : null;
-  const commission = currentService ? currentService.price * COMMISSION_RATE : 0;
-  const total = currentService ? currentService.price + commission : 0;
 
   const handleSelectSlot = (serviceId: string, slotId: string, time: string) => {
     setSelectedSlot({ serviceId, slotId, time });
@@ -237,18 +235,10 @@ const CitizenDashboard = () => {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-border/60 p-4 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Prestazione</span>
-                  <span className="text-foreground">€{currentService.price.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Commissione servizio (2%)</span>
-                  <span className="text-foreground">€{commission.toFixed(2)}</span>
-                </div>
-                <div className="border-t pt-2 flex justify-between font-semibold">
-                  <span className="text-foreground">Totale</span>
-                  <span className="text-primary text-lg">€{total.toFixed(2)}</span>
+              <div className="rounded-2xl border border-border/60 p-4">
+                <div className="flex justify-between font-semibold">
+                  <span className="text-foreground">Totale da pagare</span>
+                  <span className="text-primary text-lg">€{currentService.price.toFixed(2)}</span>
                 </div>
               </div>
 
