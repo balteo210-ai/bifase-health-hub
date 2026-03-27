@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Calendar } from '@/components/ui/calendar';
-import { useAppStore, COMMISSION_RATE } from '@/lib/store';
+import { useAppStore } from '@/lib/store';
 import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck } from 'lucide-react';
 import BifaseLogo from '@/components/BifaseLogo';
 import { toast } from 'sonner';
@@ -259,8 +259,8 @@ const CitizenDashboard = () => {
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
-                    <Euro className="h-4 w-4" />
-                    Paga €{total.toFixed(2)}
+                    <CreditCard className="h-4 w-4" />
+                    Paga €{currentService?.price.toFixed(2)}
                   </span>
                 )}
               </Button>
