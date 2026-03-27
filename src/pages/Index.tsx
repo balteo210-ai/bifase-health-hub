@@ -1,6 +1,7 @@
 import Navbar from '@/components/landing/Navbar';
 import Hero from '@/components/landing/Hero';
 import ValueProps from '@/components/landing/ValueProps';
+import VideoShowcase from '@/components/landing/VideoShowcase';
 import HowItWorks from '@/components/landing/HowItWorks';
 import ForProviders from '@/components/landing/ForProviders';
 import Footer from '@/components/landing/Footer';
@@ -11,6 +12,7 @@ const Index = () => {
       <Navbar />
       <Hero />
       <ValueProps />
+      <VideoShowcase />
       <HowItWorks />
       <ForProviders />
       <Footer />
