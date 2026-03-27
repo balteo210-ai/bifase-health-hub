@@ -3,17 +3,25 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { useAppStore } from '@/lib/store';
-import { Search, MapPin, Clock, LogOut, X, CheckCircle2 } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { useAppStore, COMMISSION_RATE } from '@/lib/store';
+import { Search, MapPin, Clock, LogOut, X, CheckCircle2, Euro, CreditCard, ShieldCheck } from 'lucide-react';
 import BifaseLogo from '@/components/BifaseLogo';
 import { toast } from 'sonner';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { format } from 'date-fns';
+import { it } from 'date-fns/locale';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const CitizenDashboard = () => {
   const { user, services, appointments, bookAppointment, cancelAppointment, logout } = useAppStore();
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedSlot, setSelectedSlot] = useState<{ serviceId: string; slotId: string; time: string } | null>(null);
+  const [paymentOpen, setPaymentOpen] = useState(false);
+  const [paying, setPaying] = useState(false);
 
   if (!user) { navigate('/role-select'); return null; }
 
@@ -26,10 +34,27 @@ const CitizenDashboard = () => {
 
   const activeAppointments = appointments.filter((a) => a.status === 'confirmed');
 
-  const handleBook = (serviceId: string, slotId: string) => {
-    bookAppointment(serviceId, slotId);
-    setSelectedService(null);
-    toast.success('Appuntamento prenotato con successo!');
+  const currentService = selectedSlot ? services.find((s) => s.id === selectedSlot.serviceId) : null;
+  const commission = currentService ? currentService.price * COMMISSION_RATE : 0;
+  const total = currentService ? currentService.price + commission : 0;
+
+  const handleSelectSlot = (serviceId: string, slotId: string, time: string) => {
+    setSelectedSlot({ serviceId, slotId, time });
+    setPaymentOpen(true);
+  };
+
+  const handleConfirmPayment = () => {
+    if (!selectedSlot || !selectedDate) return;
+    setPaying(true);
+    setTimeout(() => {
+      bookAppointment(selectedSlot.serviceId, selectedSlot.slotId, format(selectedDate, 'yyyy-MM-dd'));
+      setPaying(false);
+      setPaymentOpen(false);
+      setSelectedSlot(null);
+      setSelectedService(null);
+      setSelectedDate(undefined);
+      toast.success('Pagamento completato! Appuntamento confermato.');
+    }, 1500);
   };
 
   const handleCancel = (appointmentId: string) => {
@@ -55,12 +80,7 @@ const CitizenDashboard = () => {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        <motion.div
-          className="mb-8"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
+        <motion.div className="mb-8" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
           <div className="relative">
             <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
             <Input
@@ -93,29 +113,54 @@ const CitizenDashboard = () => {
                         <Badge variant="secondary" className="rounded-full text-xs">{service.type}</Badge>
                       </div>
                     </div>
-                    <Button size="sm" className="rounded-full" variant={selectedService === service.id ? 'outline' : 'default'}
-                      onClick={() => setSelectedService(selectedService === service.id ? null : service.id)}>
-                      {selectedService === service.id ? 'Chiudi' : 'Prenota'}
-                    </Button>
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="font-display text-lg font-bold text-primary">€{service.price.toFixed(2)}</span>
+                      <Button size="sm" className="rounded-full" variant={selectedService === service.id ? 'outline' : 'default'}
+                        onClick={() => { setSelectedService(selectedService === service.id ? null : service.id); setSelectedDate(undefined); }}>
+                        {selectedService === service.id ? 'Chiudi' : 'Prenota'}
+                      </Button>
+                    </div>
                   </div>
-                  {selectedService === service.id && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      className="border-t pt-4"
-                    >
-                      <p className="mb-3 text-sm font-medium text-foreground">Orari disponibili:</p>
-                      <div className="flex flex-wrap gap-2">
-                        {service.slots.map((slot) => (
-                          <Button key={slot.id} size="sm" variant={slot.available ? 'outline' : 'ghost'} disabled={!slot.available}
-                            className={`rounded-full ${slot.available ? 'border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground' : 'opacity-30'}`}
-                            onClick={() => handleBook(service.id, slot.id)}>
-                            <Clock className="mr-1 h-3 w-3" />{slot.time}
-                          </Button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
+
+                  <AnimatePresence>
+                    {selectedService === service.id && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden border-t pt-4"
+                      >
+                        <p className="mb-3 text-sm font-semibold text-foreground">1. Scegli una data:</p>
+                        <div className="mb-4 flex justify-center">
+                          <Calendar
+                            mode="single"
+                            selected={selectedDate}
+                            onSelect={setSelectedDate}
+                            locale={it}
+                            disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                            className="rounded-2xl border border-border/60 bg-background p-3 pointer-events-auto"
+                          />
+                        </div>
+
+                        {selectedDate && (
+                          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                            <p className="mb-3 text-sm font-semibold text-foreground">
+                              2. Scegli un orario per il {format(selectedDate, 'd MMMM yyyy', { locale: it })}:
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {service.slots.map((slot) => (
+                                <Button key={slot.id} size="sm" variant={slot.available ? 'outline' : 'ghost'} disabled={!slot.available}
+                                  className={`rounded-full ${slot.available ? 'border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground' : 'opacity-30'}`}
+                                  onClick={() => handleSelectSlot(service.id, slot.id, slot.time)}>
+                                  <Clock className="mr-1 h-3 w-3" />{slot.time}
+                                </Button>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               ))}
             </div>
@@ -143,7 +188,12 @@ const CitizenDashboard = () => {
                           <span className="font-display font-semibold text-foreground">{apt.serviceName}</span>
                         </div>
                         <p className="mt-1 text-sm text-muted-foreground">{apt.providerName}</p>
-                        <p className="text-sm text-muted-foreground">{apt.date} alle {apt.time}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {apt.date && !isNaN(new Date(apt.date).getTime())
+                            ? format(new Date(apt.date), 'd MMMM yyyy', { locale: it })
+                            : apt.date} alle {apt.time}
+                        </p>
+                        <p className="mt-1 text-sm font-medium text-primary">€{apt.price.toFixed(2)}</p>
                       </div>
                       <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive" onClick={() => handleCancel(apt.id)}>
                         <X className="h-4 w-4" />
@@ -156,6 +206,78 @@ const CitizenDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Payment Modal */}
+      <Dialog open={paymentOpen} onOpenChange={(open) => { if (!paying) setPaymentOpen(open); }}>
+        <DialogContent className="rounded-3xl sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-display flex items-center gap-2">
+              <CreditCard className="h-5 w-5 text-primary" />
+              Conferma e Paga
+            </DialogTitle>
+          </DialogHeader>
+          {currentService && selectedDate && selectedSlot && (
+            <div className="space-y-5">
+              <div className="rounded-2xl bg-secondary/50 p-4 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Servizio</span>
+                  <span className="font-medium text-foreground">{currentService.name}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Professionista</span>
+                  <span className="font-medium text-foreground">{currentService.providerName}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Data</span>
+                  <span className="font-medium text-foreground">{format(selectedDate, 'd MMMM yyyy', { locale: it })}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Orario</span>
+                  <span className="font-medium text-foreground">{selectedSlot.time}</span>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-border/60 p-4 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Prestazione</span>
+                  <span className="text-foreground">€{currentService.price.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Commissione servizio (2%)</span>
+                  <span className="text-foreground">€{commission.toFixed(2)}</span>
+                </div>
+                <div className="border-t pt-2 flex justify-between font-semibold">
+                  <span className="text-foreground">Totale</span>
+                  <span className="text-primary text-lg">€{total.toFixed(2)}</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <ShieldCheck className="h-4 w-4 text-success" />
+                Pagamento sicuro e protetto
+              </div>
+
+              <Button
+                onClick={handleConfirmPayment}
+                disabled={paying}
+                className="h-12 w-full rounded-xl text-base shadow-lg shadow-primary/20"
+              >
+                {paying ? (
+                  <span className="flex items-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                    Elaborazione in corso...
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <Euro className="h-4 w-4" />
+                    Paga €{total.toFixed(2)}
+                  </span>
+                )}
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

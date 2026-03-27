@@ -5,31 +5,111 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { useAppStore } from '@/lib/store';
-import { LogOut, Plus, Trash2, Calendar, Users, Clock, X, CheckCircle2 } from 'lucide-react';
+import { useAppStore, COMMISSION_RATE, SUBSCRIPTION_PRICE } from '@/lib/store';
+import { LogOut, Plus, Trash2, Calendar, Users, Clock, X, CheckCircle2, Euro, Crown, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { motion } from 'framer-motion';
 
 const ProviderDashboard = () => {
-  const { user, providerServices, providerAppointments, addProviderService, removeProviderService, cancelAppointment, logout } = useAppStore();
+  const { user, providerServices, providerAppointments, addProviderService, removeProviderService, cancelAppointment, logout, subscribe } = useAppStore();
   const navigate = useNavigate();
   const [newName, setNewName] = useState('');
   const [newType, setNewType] = useState('');
   const [newLocation, setNewLocation] = useState('');
+  const [newPrice, setNewPrice] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [subscribing, setSubscribing] = useState(false);
 
   if (!user) { navigate('/role-select'); return null; }
+
+  // Show subscription gate if not subscribed
+  if (!user.subscribed) {
+    return (
+      <div className="flex min-h-screen items-center justify-center px-4" style={{ background: 'var(--gradient-hero)' }}>
+        <motion.div
+          className="w-full max-w-lg text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="rounded-3xl border border-border/60 bg-card p-10 shadow-xl" style={{ boxShadow: 'var(--shadow-elevated)' }}>
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-primary/10 to-primary/5">
+              <Crown className="h-10 w-10 text-primary" />
+            </div>
+            <h1 className="mb-2 font-display text-3xl font-bold text-foreground">Piano Professionale</h1>
+            <p className="mb-8 text-muted-foreground">
+              Per iniziare a gestire i tuoi appuntamenti su Bifase, attiva il piano annuale.
+            </p>
+
+            <div className="mb-8 rounded-2xl bg-secondary/50 p-6">
+              <div className="mb-2 text-sm text-muted-foreground">Abbonamento annuale</div>
+              <div className="flex items-baseline justify-center gap-1">
+                <span className="font-display text-5xl font-extrabold text-foreground">€{SUBSCRIPTION_PRICE}</span>
+                <span className="text-muted-foreground">/anno</span>
+              </div>
+              <div className="mt-4 space-y-2 text-left text-sm text-muted-foreground">
+                <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> Gestione completa appuntamenti</div>
+                <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> Profilo visibile ai cittadini</div>
+                <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> Recupero intelligente degli slot</div>
+                <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> Dashboard analytics</div>
+              </div>
+              <div className="mt-4 rounded-xl bg-accent/50 px-3 py-2 text-xs text-accent-foreground">
+                Commissione del {COMMISSION_RATE * 100}% su ogni prestazione erogata
+              </div>
+            </div>
+
+            <Button
+              onClick={() => {
+                setSubscribing(true);
+                setTimeout(() => {
+                  subscribe();
+                  setSubscribing(false);
+                  toast.success('Abbonamento attivato! Benvenuto su Bifase.');
+                }, 1500);
+              }}
+              disabled={subscribing}
+              className="h-12 w-full rounded-xl text-base shadow-lg shadow-primary/20"
+            >
+              {subscribing ? (
+                <span className="flex items-center gap-2">
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                  Elaborazione...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Euro className="h-4 w-4" />
+                  Abbonati ora — €{SUBSCRIPTION_PRICE}/anno
+                </span>
+              )}
+            </Button>
+
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
+              <ShieldCheck className="h-4 w-4 text-success" />
+              Pagamento sicuro e protetto
+            </div>
+
+            <button onClick={() => { logout(); navigate('/'); }} className="mt-6 text-sm text-muted-foreground hover:text-foreground transition-colors">
+              ← Torna alla home
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   const confirmedAppointments = providerAppointments.filter((a) => a.status === 'confirmed');
   const totalSlots = providerServices.reduce((acc, s) => acc + s.slots.length, 0);
   const availableSlots = providerServices.reduce((acc, s) => acc + s.slots.filter((sl) => sl.available).length, 0);
+  const totalRevenue = providerAppointments.filter((a) => a.status === 'confirmed').reduce((acc, a) => acc + a.price, 0);
+  const totalCommission = providerAppointments.filter((a) => a.status === 'confirmed').reduce((acc, a) => acc + a.commission, 0);
 
   const handleAddService = (e: React.FormEvent) => {
     e.preventDefault();
     addProviderService({
       name: newName, providerName: user.name, location: newLocation, type: newType,
+      price: parseFloat(newPrice) || 0,
       slots: [
         { id: `ns-${Date.now()}-1`, time: '09:00', available: true },
         { id: `ns-${Date.now()}-2`, time: '10:00', available: true },
@@ -38,7 +118,7 @@ const ProviderDashboard = () => {
         { id: `ns-${Date.now()}-5`, time: '15:00', available: true },
       ],
     });
-    setNewName(''); setNewType(''); setNewLocation('');
+    setNewName(''); setNewType(''); setNewLocation(''); setNewPrice('');
     setDialogOpen(false);
     toast.success('Servizio aggiunto con successo!');
   };
@@ -50,7 +130,7 @@ const ProviderDashboard = () => {
 
   const stats = [
     { icon: Calendar, label: 'In programma', value: confirmedAppointments.length, color: 'text-primary', bg: 'from-primary/10 to-primary/5' },
-    { icon: Users, label: 'Prenotazioni totali', value: providerAppointments.length, color: 'text-success', bg: 'from-success/10 to-success/5' },
+    { icon: Euro, label: 'Ricavo netto', value: `€${(totalRevenue - totalCommission).toFixed(0)}`, color: 'text-success', bg: 'from-success/10 to-success/5' },
     { icon: Clock, label: 'Slot disponibili', value: `${availableSlots}/${totalSlots}`, color: 'text-accent-foreground', bg: 'from-accent to-accent/50' },
   ];
 
@@ -60,7 +140,7 @@ const ProviderDashboard = () => {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <BifaseLogo size="navbar" />
           <div className="flex items-center gap-3">
-            <Badge variant="outline" className="rounded-full">Operatore</Badge>
+            <Badge variant="outline" className="rounded-full gap-1"><Crown className="h-3 w-3" /> Pro</Badge>
             <span className="text-sm text-muted-foreground">{user.name}</span>
             <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" onClick={() => { logout(); navigate('/'); }}><LogOut className="h-4 w-4" /></Button>
           </div>
@@ -68,6 +148,24 @@ const ProviderDashboard = () => {
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Commission banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6 rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 flex items-center justify-between"
+        >
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+              <Euro className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-foreground">Commissioni Bifase ({COMMISSION_RATE * 100}%)</p>
+              <p className="text-xs text-muted-foreground">Totale commissioni: €{totalCommission.toFixed(2)}</p>
+            </div>
+          </div>
+          <Badge className="rounded-full">Piano attivo</Badge>
+        </motion.div>
+
         <div className="mb-8 grid gap-4 sm:grid-cols-3">
           {stats.map((stat, i) => (
             <motion.div
@@ -116,6 +214,11 @@ const ProviderDashboard = () => {
                       </Select>
                     </div>
                     <div className="space-y-2"><Label>Località</Label><Input value={newLocation} onChange={(e) => setNewLocation(e.target.value)} required placeholder="es. Milano Centro" className="h-11 rounded-xl" /></div>
+                    <div className="space-y-2">
+                      <Label>Prezzo (€)</Label>
+                      <Input type="number" min="0" step="0.01" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required placeholder="es. 80.00" className="h-11 rounded-xl" />
+                      <p className="text-xs text-muted-foreground">Commissione Bifase: {COMMISSION_RATE * 100}% su ogni prestazione</p>
+                    </div>
                     <Button type="submit" className="h-11 w-full rounded-xl">Aggiungi servizio</Button>
                   </form>
                 </DialogContent>
@@ -134,7 +237,10 @@ const ProviderDashboard = () => {
                     <div>
                       <h3 className="font-display font-bold text-foreground">{service.name}</h3>
                       <p className="text-sm text-muted-foreground">{service.location}</p>
-                      <Badge variant="secondary" className="mt-2 rounded-full text-xs">{service.type}</Badge>
+                      <div className="mt-2 flex items-center gap-2">
+                        <Badge variant="secondary" className="rounded-full text-xs">{service.type}</Badge>
+                        <span className="text-sm font-semibold text-primary">€{service.price.toFixed(2)}</span>
+                      </div>
                     </div>
                     <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive" onClick={() => { removeProviderService(service.id); toast.success('Servizio rimosso'); }}>
                       <Trash2 className="h-4 w-4" />
@@ -173,9 +279,13 @@ const ProviderDashboard = () => {
                           <span className="font-display font-semibold text-foreground">{apt.serviceName}</span>
                         </div>
                         <p className="mt-1 text-sm text-muted-foreground">{apt.date} alle {apt.time}</p>
-                        <Badge variant={apt.status === 'confirmed' ? 'default' : 'destructive'} className="mt-2 rounded-full text-xs">
-                          {apt.status === 'confirmed' ? 'confermato' : 'cancellato'}
-                        </Badge>
+                        <div className="mt-2 flex items-center gap-3">
+                          <span className="text-sm font-medium text-foreground">€{apt.price.toFixed(2)}</span>
+                          <span className="text-xs text-muted-foreground">- €{apt.commission.toFixed(2)} comm.</span>
+                          <Badge variant={apt.status === 'confirmed' ? 'default' : 'destructive'} className="rounded-full text-xs">
+                            {apt.status === 'confirmed' ? 'confermato' : 'cancellato'}
+                          </Badge>
+                        </div>
                       </div>
                       {apt.status === 'confirmed' && (
                         <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive" onClick={() => handleCancelAppointment(apt.id)}>
