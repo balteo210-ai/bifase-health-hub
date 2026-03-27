@@ -139,6 +139,12 @@ const CitizenDashboard = () => {
                       <p className="text-sm text-muted-foreground">{service.providerName}</p>
                       <div className="mt-2 flex items-center gap-3 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {service.location}</span>
+                        {service.distance !== null && (
+                          <Badge variant="outline" className="rounded-full text-xs gap-1">
+                            <Navigation className="h-3 w-3" />
+                            {service.distance < 1 ? `${(service.distance * 1000).toFixed(0)} m` : `${service.distance.toFixed(1)} km`}
+                          </Badge>
+                        )}
                         <Badge variant="secondary" className="rounded-full text-xs">{service.type}</Badge>
                       </div>
                     </div>
