@@ -110,6 +110,7 @@ const ProviderDashboard = () => {
     addProviderService({
       name: newName, providerName: user.name, location: newLocation, type: newType,
       price: parseFloat(newPrice) || 0,
+      lat: 45.4642, lng: 9.1900,
       slots: [
         { id: `ns-${Date.now()}-1`, time: '09:00', available: true },
         { id: `ns-${Date.now()}-2`, time: '10:00', available: true },
