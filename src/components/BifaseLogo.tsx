@@ -8,9 +8,9 @@ interface BifaseLogoProps {
 }
 
 const sizeMap = {
-  sm: 'h-8',
-  md: 'h-10',
-  lg: 'h-16',
+  sm: 'h-14',
+  md: 'h-20',
+  lg: 'h-32',
 };
 
 const BifaseLogo = ({ className = '', size = 'md', linkTo = '/' }: BifaseLogoProps) => {
