@@ -190,8 +190,14 @@ const ExplorePage = () => {
                   <MapPin className="h-3.5 w-3.5" />
                   {provider.location}
                 </span>
+                {provider.distance !== null && (
+                  <Badge variant="outline" className="rounded-full text-xs gap-1">
+                    <Navigation className="h-3 w-3" />
+                    {provider.distance < 1 ? `${(provider.distance * 1000).toFixed(0)} m` : `${provider.distance.toFixed(1)} km`}
+                  </Badge>
+                )}
                 <span className="flex items-center gap-1">
-                  <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                  <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
                   {provider.rating} ({provider.reviews})
                 </span>
               </div>
