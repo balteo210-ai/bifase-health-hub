@@ -132,6 +132,13 @@ const ExplorePage = () => {
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-3xl font-bold text-foreground">Trova il tuo professionista sanitario</h1>
           <p className="text-muted-foreground">Cerca tra farmacie, medici, dentisti e altri professionisti nella tua zona</p>
+          <div className="mt-3 inline-flex items-center gap-2 text-sm text-muted-foreground">
+            {location.loading ? (
+              <><Loader2 className="h-4 w-4 animate-spin" /> Rilevamento posizione...</>
+            ) : (
+              <><Navigation className="h-4 w-4 text-primary" /> Posizione: <span className="font-medium text-foreground">{location.city || 'Italia'}</span> · Ordinati per distanza</>
+            )}
+          </div>
         </div>
 
         <div className="mx-auto mb-6 max-w-2xl">
