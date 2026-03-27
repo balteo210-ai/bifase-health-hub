@@ -39,10 +39,10 @@ export interface User {
 const mockServices: Service[] = [
   {
     id: '1',
-    name: 'General Consultation',
-    providerName: 'Dr. Sarah Martin',
-    location: 'Paris 11e',
-    type: 'General Medicine',
+    name: 'Visita Generale',
+    providerName: 'Dott.ssa Sara Martini',
+    location: 'Milano Centro',
+    type: 'Medicina Generale',
     slots: [
       { id: 's1', time: '09:00', available: true },
       { id: 's2', time: '09:30', available: false },
@@ -55,10 +55,10 @@ const mockServices: Service[] = [
   },
   {
     id: '2',
-    name: 'Dental Cleaning',
-    providerName: 'Cabinet Dentaire Lumière',
-    location: 'Lyon 3e',
-    type: 'Dentistry',
+    name: 'Pulizia Dentale',
+    providerName: 'Studio Dentistico Luce',
+    location: 'Roma Prati',
+    type: 'Odontoiatria',
     slots: [
       { id: 's8', time: '08:00', available: true },
       { id: 's9', time: '08:30', available: true },
@@ -69,10 +69,10 @@ const mockServices: Service[] = [
   },
   {
     id: '3',
-    name: 'Pharmacy Pickup',
-    providerName: 'Pharmacie Centrale',
-    location: 'Marseille 1er',
-    type: 'Pharmacy',
+    name: 'Ritiro Farmacia',
+    providerName: 'Farmacia Centrale',
+    location: 'Napoli Centro',
+    type: 'Farmacia',
     slots: [
       { id: 's13', time: '09:00', available: true },
       { id: 's14', time: '10:00', available: true },
@@ -83,10 +83,10 @@ const mockServices: Service[] = [
   },
   {
     id: '4',
-    name: 'Physiotherapy Session',
-    providerName: 'Kiné Plus',
-    location: 'Bordeaux Centre',
-    type: 'Physiotherapy',
+    name: 'Seduta di Fisioterapia',
+    providerName: 'Fisio Plus',
+    location: 'Torino Centro',
+    type: 'Fisioterapia',
     slots: [
       { id: 's18', time: '08:00', available: false },
       { id: 's19', time: '09:00', available: true },
@@ -97,10 +97,10 @@ const mockServices: Service[] = [
   },
   {
     id: '5',
-    name: 'Eye Exam',
-    providerName: 'Dr. Pierre Dupont',
-    location: 'Toulouse Centre',
-    type: 'Ophthalmology',
+    name: 'Visita Oculistica',
+    providerName: 'Dott. Pietro Bianchi',
+    location: 'Firenze Centro',
+    type: 'Oculistica',
     slots: [
       { id: 's23', time: '09:30', available: true },
       { id: 's24', time: '10:30', available: true },
@@ -131,10 +131,10 @@ export const useAppStore = create<AppState>((set, get) => ({
   providerServices: [
     {
       id: 'p1',
-      name: 'General Consultation',
-      providerName: 'My Clinic',
-      location: 'Paris 11e',
-      type: 'General Medicine',
+      name: 'Visita Generale',
+      providerName: 'La Mia Clinica',
+      location: 'Milano Centro',
+      type: 'Medicina Generale',
       slots: [
         { id: 'ps1', time: '09:00', available: true },
         { id: 'ps2', time: '10:00', available: true },
@@ -148,11 +148,11 @@ export const useAppStore = create<AppState>((set, get) => ({
     {
       id: 'pa1',
       serviceId: 'p1',
-      serviceName: 'General Consultation',
-      providerName: 'My Clinic',
-      location: 'Paris 11e',
+      serviceName: 'Visita Generale',
+      providerName: 'La Mia Clinica',
+      location: 'Milano Centro',
       time: '11:00',
-      date: 'Today',
+      date: 'Oggi',
       status: 'confirmed',
     },
   ],
@@ -185,7 +185,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       providerName: service.providerName,
       location: service.location,
       time: slot.time,
-      date: 'Today',
+      date: 'Oggi',
       status: 'confirmed',
     };
 

@@ -1,10 +1,10 @@
 import { Search, Eye, CalendarCheck, BellRing } from 'lucide-react';
 
 const steps = [
-  { icon: Search, title: 'Search for a service', step: '01' },
-  { icon: Eye, title: 'View real-time availability', step: '02' },
-  { icon: CalendarCheck, title: 'Book instantly', step: '03' },
-  { icon: BellRing, title: 'Receive reminders', step: '04' },
+  { icon: Search, title: 'Cerca un servizio', step: '01' },
+  { icon: Eye, title: 'Visualizza disponibilità in tempo reale', step: '02' },
+  { icon: CalendarCheck, title: 'Prenota istantaneamente', step: '03' },
+  { icon: BellRing, title: 'Ricevi promemoria', step: '04' },
 ];
 
 const HowItWorks = () => {
@@ -12,12 +12,11 @@ const HowItWorks = () => {
     <section className="bg-background py-24">
       <div className="container mx-auto px-4">
         <h2 className="mb-4 text-center text-3xl font-bold text-foreground md:text-4xl">
-          How it works
+          Come funziona
         </h2>
         <p className="mx-auto mb-16 max-w-lg text-center text-muted-foreground">
-          Book your next appointment in 4 simple steps
+          Prenota il tuo prossimo appuntamento in 4 semplici passi
         </p>
-
         <div className="grid gap-8 md:grid-cols-4">
           {steps.map((step, i) => (
             <div key={step.step} className="relative text-center">
