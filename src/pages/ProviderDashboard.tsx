@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import BifaseLogo from '@/components/BifaseLogo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -50,7 +51,7 @@ const ProviderDashboard = () => {
     <div className="min-h-screen bg-secondary">
       <header className="border-b bg-card">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link to="/" className="text-xl font-bold text-primary">Bifase</Link>
+          <BifaseLogo size="sm" />
           <div className="flex items-center gap-3">
             <Badge variant="outline">Operatore</Badge>
             <span className="text-sm text-muted-foreground">{user.name}</span>

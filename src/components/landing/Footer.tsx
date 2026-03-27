@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import BifaseLogo from '@/components/BifaseLogo';
 
 const Footer = () => {
   return (
@@ -6,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div>
-            <span className="text-xl font-bold text-primary">Bifase</span>
+            <BifaseLogo size="sm" linkTo="/" />
             <p className="mt-1 text-sm text-muted-foreground">
               Colleghiamo cittadini e operatori sanitari
             </p>

@@ -24,7 +24,7 @@ const Hero = () => {
             Cerca, confronta e prenota — tutto in un unico posto.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link to="/role-select">
+            <Link to="/esplora">
               <Button size="lg" className="gap-2 px-8 text-base">
                 <Search className="h-4 w-4" />
                 Trova un servizio

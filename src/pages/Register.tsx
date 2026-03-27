@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAppStore } from '@/lib/store';
+import BifaseLogo from '@/components/BifaseLogo';
 
 const Register = () => {
   const [searchParams] = useSearchParams();
@@ -26,7 +27,7 @@ const Register = () => {
     <div className="flex min-h-screen items-center justify-center bg-secondary px-4">
       <div className="w-full max-w-md">
         <div className="rounded-2xl border bg-card p-8 shadow-sm">
-          <Link to="/" className="mb-6 inline-block text-xl font-bold text-primary">Bifase</Link>
+          <div className="mb-6"><BifaseLogo size="md" linkTo="/" /></div>
           <h1 className="mb-1 text-2xl font-bold text-foreground">Crea un account</h1>
           <p className="mb-6 text-sm text-muted-foreground">
             Registrati come {role === 'citizen' ? 'cittadino' : 'operatore sanitario'}

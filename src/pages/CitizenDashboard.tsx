@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useAppStore } from '@/lib/store';
 import { Search, MapPin, Clock, LogOut, X, CheckCircle2 } from 'lucide-react';
+import BifaseLogo from '@/components/BifaseLogo';
 import { toast } from 'sonner';
 
 const CitizenDashboard = () => {
@@ -42,7 +43,7 @@ const CitizenDashboard = () => {
     <div className="min-h-screen bg-secondary">
       <header className="border-b bg-card">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link to="/" className="text-xl font-bold text-primary">Bifase</Link>
+          <BifaseLogo size="sm" />
           <div className="flex items-center gap-3">
             <span className="text-sm text-muted-foreground">Ciao, {user.name}</span>
             <Button variant="ghost" size="sm" onClick={() => { logout(); navigate('/'); }}>
