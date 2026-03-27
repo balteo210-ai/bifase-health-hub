@@ -93,16 +93,27 @@ const categories = ['Tutti', 'Medicina Generale', 'Odontoiatria', 'Farmacia', 'F
 const ExplorePage = () => {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Tutti');
+  const location = useGeolocation();
 
-  const filtered = providers.filter((p) => {
-    const matchesSearch =
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.type.toLowerCase().includes(search.toLowerCase()) ||
-      p.location.toLowerCase().includes(search.toLowerCase()) ||
-      p.services.some((s) => s.toLowerCase().includes(search.toLowerCase()));
-    const matchesCategory = selectedCategory === 'Tutti' || p.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const providersWithDistance = useMemo(() => {
+    if (!location.lat && !location.lng) return providers.map((p) => ({ ...p, distance: null as number | null }));
+    return providers.map((p) => ({
+      ...p,
+      distance: getDistanceKm(location.lat, location.lng, p.lat, p.lng),
+    }));
+  }, [location.lat, location.lng]);
+
+  const filtered = providersWithDistance
+    .filter((p) => {
+      const matchesSearch =
+        p.name.toLowerCase().includes(search.toLowerCase()) ||
+        p.type.toLowerCase().includes(search.toLowerCase()) ||
+        p.location.toLowerCase().includes(search.toLowerCase()) ||
+        p.services.some((s) => s.toLowerCase().includes(search.toLowerCase()));
+      const matchesCategory = selectedCategory === 'Tutti' || p.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    })
+    .sort((a, b) => (a.distance ?? 9999) - (b.distance ?? 9999));
 
   return (
     <div className="min-h-screen bg-secondary">
