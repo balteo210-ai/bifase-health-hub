@@ -8,17 +8,17 @@ const Footer = () => {
           <div>
             <span className="text-xl font-bold text-primary">Bifase</span>
             <p className="mt-1 text-sm text-muted-foreground">
-              Connecting citizens and healthcare providers
+              Colleghiamo cittadini e operatori sanitari
             </p>
           </div>
           <div className="flex gap-8 text-sm text-muted-foreground">
-            <Link to="/" className="hover:text-foreground transition-colors">About</Link>
-            <Link to="/" className="hover:text-foreground transition-colors">Contact</Link>
+            <Link to="/" className="hover:text-foreground transition-colors">Chi siamo</Link>
+            <Link to="/" className="hover:text-foreground transition-colors">Contatti</Link>
             <Link to="/" className="hover:text-foreground transition-colors">Privacy</Link>
           </div>
         </div>
         <div className="mt-8 border-t pt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Bifase. All rights reserved.
+          © {new Date().getFullYear()} Bifase. Tutti i diritti riservati.
         </div>
       </div>
     </footer>
