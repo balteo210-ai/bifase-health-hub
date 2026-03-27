@@ -43,8 +43,9 @@ const CitizenDashboard = () => {
     .sort((a, b) => (a.distance ?? 9999) - (b.distance ?? 9999));
 
   const activeAppointments = appointments.filter((a) => a.status === 'confirmed');
-
   const currentService = selectedSlot ? services.find((s) => s.id === selectedSlot.serviceId) : null;
+
+  if (!user) { navigate('/role-select'); return null; }
 
   const handleSelectSlot = (serviceId: string, slotId: string, time: string) => {
     setSelectedSlot({ serviceId, slotId, time });
