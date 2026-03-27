@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import BifaseLogo from '@/components/BifaseLogo';
-import { Search, MapPin, Star, Clock, Phone, ArrowRight } from 'lucide-react';
+import { Search, MapPin, Star, Clock, Phone, ArrowRight, Navigation, Loader2 } from 'lucide-react';
+import { useGeolocation, getDistanceKm, CITY_COORDS } from '@/hooks/use-geolocation';
 
 interface Provider {
   id: string;
@@ -13,6 +14,8 @@ interface Provider {
   category: string;
   location: string;
   address: string;
+  lat: number;
+  lng: number;
   rating: number;
   reviews: number;
   phone: string;
@@ -24,154 +27,64 @@ interface Provider {
 
 const providers: Provider[] = [
   {
-    id: '1',
-    name: 'Dott.ssa Sara Martini',
-    type: 'Medico di base',
-    category: 'Medicina Generale',
-    location: 'Milano',
-    address: 'Via Montenapoleone 12, Milano',
-    rating: 4.8,
-    reviews: 124,
-    phone: '+39 02 1234567',
-    availableToday: true,
-    nextSlot: '09:30',
-    services: ['Visita Generale', 'Certificati Medici', 'Prescrizioni'],
-    image: '👩‍⚕️',
+    id: '1', name: 'Dott.ssa Sara Martini', type: 'Medico di base', category: 'Medicina Generale',
+    location: 'Milano', address: 'Via Montenapoleone 12, Milano', lat: 45.4685, lng: 9.1954,
+    rating: 4.8, reviews: 124, phone: '+39 02 1234567', availableToday: true, nextSlot: '09:30',
+    services: ['Visita Generale', 'Certificati Medici', 'Prescrizioni'], image: '👩‍⚕️',
   },
   {
-    id: '2',
-    name: 'Studio Dentistico Luce',
-    type: 'Dentista',
-    category: 'Odontoiatria',
-    location: 'Roma',
-    address: 'Via Cola di Rienzo 45, Roma',
-    rating: 4.9,
-    reviews: 89,
-    phone: '+39 06 7654321',
-    availableToday: true,
-    nextSlot: '11:00',
-    services: ['Pulizia Dentale', 'Otturazione', 'Sbiancamento', 'Ortodonzia'],
-    image: '🦷',
+    id: '2', name: 'Studio Dentistico Luce', type: 'Dentista', category: 'Odontoiatria',
+    location: 'Roma', address: 'Via Cola di Rienzo 45, Roma', lat: 41.9100, lng: 12.4650,
+    rating: 4.9, reviews: 89, phone: '+39 06 7654321', availableToday: true, nextSlot: '11:00',
+    services: ['Pulizia Dentale', 'Otturazione', 'Sbiancamento', 'Ortodonzia'], image: '🦷',
   },
   {
-    id: '3',
-    name: 'Farmacia Centrale',
-    type: 'Farmacia',
-    category: 'Farmacia',
-    location: 'Napoli',
-    address: 'Piazza del Plebiscito 3, Napoli',
-    rating: 4.6,
-    reviews: 203,
-    phone: '+39 081 9876543',
-    availableToday: true,
-    nextSlot: '08:00',
-    services: ['Ritiro Farmaci', 'Vaccini', 'Test Rapidi', 'Consulenza'],
-    image: '💊',
+    id: '3', name: 'Farmacia Centrale', type: 'Farmacia', category: 'Farmacia',
+    location: 'Napoli', address: 'Piazza del Plebiscito 3, Napoli', lat: 40.8359, lng: 14.2488,
+    rating: 4.6, reviews: 203, phone: '+39 081 9876543', availableToday: true, nextSlot: '08:00',
+    services: ['Ritiro Farmaci', 'Vaccini', 'Test Rapidi', 'Consulenza'], image: '💊',
   },
   {
-    id: '4',
-    name: 'Fisio Plus',
-    type: 'Fisioterapista',
-    category: 'Fisioterapia',
-    location: 'Torino',
-    address: 'Corso Vittorio Emanuele II 78, Torino',
-    rating: 4.7,
-    reviews: 67,
-    phone: '+39 011 2468135',
-    availableToday: false,
-    nextSlot: 'Domani 09:00',
-    services: ['Riabilitazione', 'Massoterapia', 'Terapia Manuale'],
-    image: '🏃',
+    id: '4', name: 'Fisio Plus', type: 'Fisioterapista', category: 'Fisioterapia',
+    location: 'Torino', address: 'Corso Vittorio Emanuele II 78, Torino', lat: 45.0672, lng: 7.6836,
+    rating: 4.7, reviews: 67, phone: '+39 011 2468135', availableToday: false, nextSlot: 'Domani 09:00',
+    services: ['Riabilitazione', 'Massoterapia', 'Terapia Manuale'], image: '🏃',
   },
   {
-    id: '5',
-    name: 'Dott. Pietro Bianchi',
-    type: 'Oculista',
-    category: 'Oculistica',
-    location: 'Firenze',
-    address: 'Via dei Calzaiuoli 22, Firenze',
-    rating: 4.9,
-    reviews: 156,
-    phone: '+39 055 1357924',
-    availableToday: true,
-    nextSlot: '14:00',
-    services: ['Visita Oculistica', 'Fondo Oculare', 'Prescrizione Lenti'],
-    image: '👁️',
+    id: '5', name: 'Dott. Pietro Bianchi', type: 'Oculista', category: 'Oculistica',
+    location: 'Firenze', address: 'Via dei Calzaiuoli 22, Firenze', lat: 43.7710, lng: 11.2535,
+    rating: 4.9, reviews: 156, phone: '+39 055 1357924', availableToday: true, nextSlot: '14:00',
+    services: ['Visita Oculistica', 'Fondo Oculare', 'Prescrizione Lenti'], image: '👁️',
   },
   {
-    id: '6',
-    name: 'Centro Analisi MedLab',
-    type: 'Laboratorio Analisi',
-    category: 'Analisi Cliniche',
-    location: 'Bologna',
-    address: 'Via Indipendenza 56, Bologna',
-    rating: 4.5,
-    reviews: 312,
-    phone: '+39 051 8642097',
-    availableToday: true,
-    nextSlot: '07:30',
-    services: ['Analisi del Sangue', 'Esami Urine', 'Tamponi', 'ECG'],
-    image: '🔬',
+    id: '6', name: 'Centro Analisi MedLab', type: 'Laboratorio Analisi', category: 'Analisi Cliniche',
+    location: 'Bologna', address: 'Via Indipendenza 56, Bologna', lat: 44.4963, lng: 11.3437,
+    rating: 4.5, reviews: 312, phone: '+39 051 8642097', availableToday: true, nextSlot: '07:30',
+    services: ['Analisi del Sangue', 'Esami Urine', 'Tamponi', 'ECG'], image: '🔬',
   },
   {
-    id: '7',
-    name: 'Dott.ssa Elena Rossi',
-    type: 'Dermatologa',
-    category: 'Dermatologia',
-    location: 'Milano',
-    address: 'Corso Buenos Aires 34, Milano',
-    rating: 4.8,
-    reviews: 98,
-    phone: '+39 02 9753186',
-    availableToday: false,
-    nextSlot: 'Domani 10:00',
-    services: ['Visita Dermatologica', 'Mappatura Nei', 'Trattamenti Acne'],
-    image: '🩺',
+    id: '7', name: 'Dott.ssa Elena Rossi', type: 'Dermatologa', category: 'Dermatologia',
+    location: 'Milano', address: 'Corso Buenos Aires 34, Milano', lat: 45.4773, lng: 9.2078,
+    rating: 4.8, reviews: 98, phone: '+39 02 9753186', availableToday: false, nextSlot: 'Domani 10:00',
+    services: ['Visita Dermatologica', 'Mappatura Nei', 'Trattamenti Acne'], image: '🩺',
   },
   {
-    id: '8',
-    name: 'Farmacia San Marco',
-    type: 'Farmacia',
-    category: 'Farmacia',
-    location: 'Venezia',
-    address: 'Calle Larga XXII Marzo 18, Venezia',
-    rating: 4.4,
-    reviews: 87,
-    phone: '+39 041 5283746',
-    availableToday: true,
-    nextSlot: '08:30',
-    services: ['Ritiro Farmaci', 'Misurazione Pressione', 'Consulenza Nutrizionale'],
-    image: '💊',
+    id: '8', name: 'Farmacia San Marco', type: 'Farmacia', category: 'Farmacia',
+    location: 'Venezia', address: 'Calle Larga XXII Marzo 18, Venezia', lat: 45.4336, lng: 12.3357,
+    rating: 4.4, reviews: 87, phone: '+39 041 5283746', availableToday: true, nextSlot: '08:30',
+    services: ['Ritiro Farmaci', 'Misurazione Pressione', 'Consulenza Nutrizionale'], image: '💊',
   },
   {
-    id: '9',
-    name: 'Dott. Marco Verdi',
-    type: 'Cardiologo',
-    category: 'Cardiologia',
-    location: 'Roma',
-    address: 'Via del Corso 112, Roma',
-    rating: 4.9,
-    reviews: 201,
-    phone: '+39 06 3692581',
-    availableToday: true,
-    nextSlot: '15:30',
-    services: ['Visita Cardiologica', 'Elettrocardiogramma', 'Holter Pressorio'],
-    image: '❤️',
+    id: '9', name: 'Dott. Marco Verdi', type: 'Cardiologo', category: 'Cardiologia',
+    location: 'Roma', address: 'Via del Corso 112, Roma', lat: 41.9030, lng: 12.4802,
+    rating: 4.9, reviews: 201, phone: '+39 06 3692581', availableToday: true, nextSlot: '15:30',
+    services: ['Visita Cardiologica', 'Elettrocardiogramma', 'Holter Pressorio'], image: '❤️',
   },
   {
-    id: '10',
-    name: 'Centro Pediatrico Arcobaleno',
-    type: 'Pediatra',
-    category: 'Pediatria',
-    location: 'Palermo',
-    address: 'Via Libertà 90, Palermo',
-    rating: 4.7,
-    reviews: 145,
-    phone: '+39 091 7418529',
-    availableToday: true,
-    nextSlot: '10:00',
-    services: ['Visita Pediatrica', 'Vaccinazioni', 'Bilancio di Crescita'],
-    image: '👶',
+    id: '10', name: 'Centro Pediatrico Arcobaleno', type: 'Pediatra', category: 'Pediatria',
+    location: 'Palermo', address: 'Via Libertà 90, Palermo', lat: 38.1249, lng: 13.3531,
+    rating: 4.7, reviews: 145, phone: '+39 091 7418529', availableToday: true, nextSlot: '10:00',
+    services: ['Visita Pediatrica', 'Vaccinazioni', 'Bilancio di Crescita'], image: '👶',
   },
 ];
 
@@ -180,16 +93,27 @@ const categories = ['Tutti', 'Medicina Generale', 'Odontoiatria', 'Farmacia', 'F
 const ExplorePage = () => {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Tutti');
+  const location = useGeolocation();
 
-  const filtered = providers.filter((p) => {
-    const matchesSearch =
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.type.toLowerCase().includes(search.toLowerCase()) ||
-      p.location.toLowerCase().includes(search.toLowerCase()) ||
-      p.services.some((s) => s.toLowerCase().includes(search.toLowerCase()));
-    const matchesCategory = selectedCategory === 'Tutti' || p.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const providersWithDistance = useMemo(() => {
+    if (!location.lat && !location.lng) return providers.map((p) => ({ ...p, distance: null as number | null }));
+    return providers.map((p) => ({
+      ...p,
+      distance: getDistanceKm(location.lat, location.lng, p.lat, p.lng),
+    }));
+  }, [location.lat, location.lng]);
+
+  const filtered = providersWithDistance
+    .filter((p) => {
+      const matchesSearch =
+        p.name.toLowerCase().includes(search.toLowerCase()) ||
+        p.type.toLowerCase().includes(search.toLowerCase()) ||
+        p.location.toLowerCase().includes(search.toLowerCase()) ||
+        p.services.some((s) => s.toLowerCase().includes(search.toLowerCase()));
+      const matchesCategory = selectedCategory === 'Tutti' || p.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    })
+    .sort((a, b) => (a.distance ?? 9999) - (b.distance ?? 9999));
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -208,6 +132,13 @@ const ExplorePage = () => {
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-3xl font-bold text-foreground">Trova il tuo professionista sanitario</h1>
           <p className="text-muted-foreground">Cerca tra farmacie, medici, dentisti e altri professionisti nella tua zona</p>
+          <div className="mt-3 inline-flex items-center gap-2 text-sm text-muted-foreground">
+            {location.loading ? (
+              <><Loader2 className="h-4 w-4 animate-spin" /> Rilevamento posizione...</>
+            ) : (
+              <><Navigation className="h-4 w-4 text-primary" /> Posizione: <span className="font-medium text-foreground">{location.city || 'Italia'}</span> · Ordinati per distanza</>
+            )}
+          </div>
         </div>
 
         <div className="mx-auto mb-6 max-w-2xl">
@@ -259,8 +190,14 @@ const ExplorePage = () => {
                   <MapPin className="h-3.5 w-3.5" />
                   {provider.location}
                 </span>
+                {provider.distance !== null && (
+                  <Badge variant="outline" className="rounded-full text-xs gap-1">
+                    <Navigation className="h-3 w-3" />
+                    {provider.distance < 1 ? `${(provider.distance * 1000).toFixed(0)} m` : `${provider.distance.toFixed(1)} km`}
+                  </Badge>
+                )}
                 <span className="flex items-center gap-1">
-                  <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                  <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
                   {provider.rating} ({provider.reviews})
                 </span>
               </div>

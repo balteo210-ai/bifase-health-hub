@@ -14,6 +14,8 @@ export interface Service {
   location: string;
   type: string;
   price: number;
+  lat: number;
+  lng: number;
   slots: TimeSlot[];
 }
 
@@ -50,6 +52,8 @@ const mockServices: Service[] = [
     location: 'Milano Centro',
     type: 'Medicina Generale',
     price: 80,
+    lat: 45.4700,
+    lng: 9.1900,
     slots: [
       { id: 's1', time: '09:00', available: true },
       { id: 's2', time: '09:30', available: false },
@@ -67,6 +71,8 @@ const mockServices: Service[] = [
     location: 'Roma Prati',
     type: 'Odontoiatria',
     price: 120,
+    lat: 41.9100,
+    lng: 12.4650,
     slots: [
       { id: 's8', time: '08:00', available: true },
       { id: 's9', time: '08:30', available: true },
@@ -82,6 +88,8 @@ const mockServices: Service[] = [
     location: 'Napoli Centro',
     type: 'Farmacia',
     price: 5,
+    lat: 40.8518,
+    lng: 14.2681,
     slots: [
       { id: 's13', time: '09:00', available: true },
       { id: 's14', time: '10:00', available: true },
@@ -97,6 +105,8 @@ const mockServices: Service[] = [
     location: 'Torino Centro',
     type: 'Fisioterapia',
     price: 65,
+    lat: 45.0703,
+    lng: 7.6869,
     slots: [
       { id: 's18', time: '08:00', available: false },
       { id: 's19', time: '09:00', available: true },
@@ -112,6 +122,8 @@ const mockServices: Service[] = [
     location: 'Firenze Centro',
     type: 'Oculistica',
     price: 95,
+    lat: 43.7696,
+    lng: 11.2558,
     slots: [
       { id: 's23', time: '09:30', available: true },
       { id: 's24', time: '10:30', available: true },
@@ -148,6 +160,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       location: 'Milano Centro',
       type: 'Medicina Generale',
       price: 75,
+      lat: 45.4642,
+      lng: 9.1900,
       slots: [
         { id: 'ps1', time: '09:00', available: true },
         { id: 'ps2', time: '10:00', available: true },
