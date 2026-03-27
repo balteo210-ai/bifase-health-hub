@@ -25,8 +25,6 @@ const CitizenDashboard = () => {
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [paying, setPaying] = useState(false);
 
-  if (!user) { navigate('/role-select'); return null; }
-
   const servicesWithDistance = useMemo(() => {
     if (!location.lat && !location.lng) return services.map((s) => ({ ...s, distance: null as number | null }));
     return services.map((s) => ({
