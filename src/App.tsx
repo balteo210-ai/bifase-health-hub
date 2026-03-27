@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CitizenDashboard from "./pages/CitizenDashboard";
 import ProviderDashboard from "./pages/ProviderDashboard";
+import ExplorePage from "./pages/ExplorePage";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/esplora" element={<ExplorePage />} />
           <Route path="/role-select" element={<RoleSelect />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

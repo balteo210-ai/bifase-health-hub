@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { User, Stethoscope } from 'lucide-react';
+import BifaseLogo from '@/components/BifaseLogo';
 
 const RoleSelect = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-secondary px-4">
       <div className="w-full max-w-lg text-center">
-        <Link to="/" className="mb-2 inline-block text-2xl font-bold text-primary">Bifase</Link>
+        <div className="mb-2"><BifaseLogo size="lg" linkTo="/" className="mx-auto" /></div>
         <h1 className="mb-2 text-3xl font-bold text-foreground">Benvenuto su Bifase</h1>
         <p className="mb-10 text-muted-foreground">Scegli come vuoi utilizzare la piattaforma</p>
         <div className="grid gap-4 sm:grid-cols-2">
