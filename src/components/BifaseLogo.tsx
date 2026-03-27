@@ -3,11 +3,12 @@ import bifaseLogo from '@/assets/bifase-logo.png';
 
 interface BifaseLogoProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'navbar' | 'sm' | 'md' | 'lg';
   linkTo?: string;
 }
 
 const sizeMap = {
+  navbar: 'h-10',
   sm: 'h-14',
   md: 'h-20',
   lg: 'h-32',
