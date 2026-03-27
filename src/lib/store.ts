@@ -160,6 +160,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       location: 'Milano Centro',
       type: 'Medicina Generale',
       price: 75,
+      lat: 45.4642,
+      lng: 9.1900,
       slots: [
         { id: 'ps1', time: '09:00', available: true },
         { id: 'ps2', time: '10:00', available: true },
