@@ -93,11 +93,11 @@ const DEFAULT_MISSIONS: Mission[] = [
 ];
 
 const DEFAULT_REWARDS: Reward[] = [
-  { id: 'r1', name: 'Sconto 5%', description: 'Sconto del 5% sulla prossima prenotazione', cost: 50, tier: 'base', type: 'discount', active: true },
-  { id: 'r2', name: 'Sconto 10%', description: 'Sconto del 10% sulla prossima prenotazione', cost: 100, tier: 'plus', type: 'discount', active: true },
-  { id: 'r3', name: 'Visita gratuita', description: 'Una visita generale gratuita', cost: 200, tier: 'premium', type: 'service', active: true },
-  { id: 'r4', name: 'Priorità prenotazione', description: 'Accesso prioritario agli slot per 30 giorni', cost: 75, tier: 'plus', type: 'prize', active: true },
-  { id: 'r5', name: 'Kit benessere', description: 'Kit benessere esclusivo Bifase', cost: 250, tier: 'premium', type: 'prize', active: true },
+  { id: 'r1', name: 'Sconto 5%', description: 'Sconto del 5% sulla prossima prenotazione', cost: 5000, tier: 'base', type: 'discount', discountPercent: 5, active: true },
+  { id: 'r2', name: 'Sconto 10%', description: 'Sconto del 10% sulla prossima prenotazione', cost: 10000, tier: 'plus', type: 'discount', discountPercent: 10, active: true },
+  { id: 'r3', name: 'Visita gratuita', description: 'Una visita generale gratuita', cost: 20000, tier: 'premium', type: 'service', discountPercent: 100, active: true },
+  { id: 'r4', name: 'Priorità prenotazione', description: 'Accesso prioritario agli slot per 30 giorni', cost: 7500, tier: 'plus', type: 'prize', active: true },
+  { id: 'r5', name: 'Kit benessere', description: 'Kit benessere esclusivo Bifase', cost: 25000, tier: 'premium', type: 'prize', active: true },
 ];
 
 // ── Helpers ────────────────────────────────────────────
