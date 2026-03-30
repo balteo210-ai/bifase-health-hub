@@ -11,6 +11,8 @@ import Register from "./pages/Register";
 import CitizenDashboard from "./pages/CitizenDashboard";
 import ProviderDashboard from "./pages/ProviderDashboard";
 import ExplorePage from "./pages/ExplorePage";
+import BiPremiaPage from "./pages/BiPremiaPage";
+import BiPremiaAdmin from "./pages/BiPremiaAdmin";
 
 const queryClient = new QueryClient();
 
