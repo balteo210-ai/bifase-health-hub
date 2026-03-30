@@ -64,10 +64,16 @@ const CitizenDashboard = () => {
     if (!selectedSlot || !selectedDate) return;
     setPaying(true);
     setTimeout(() => {
+      // Apply discount code if present
+      if (appliedDiscount) {
+        useDiscountCode(appliedDiscount.code);
+      }
       bookAppointment(selectedSlot.serviceId, selectedSlot.slotId, format(selectedDate, 'yyyy-MM-dd'));
-      // BiPremia: earn points for purchase + appointment
       if (currentService) {
-        earnPurchase(currentService.price);
+        const finalPrice = appliedDiscount
+          ? currentService.price * (1 - appliedDiscount.percent / 100)
+          : currentService.price;
+        earnPurchase(finalPrice);
         earnAppointmentCompleted();
       }
       setPaying(false);
@@ -75,10 +81,23 @@ const CitizenDashboard = () => {
       setSelectedSlot(null);
       setSelectedService(null);
       setSelectedDate(undefined);
+      setAppliedDiscount(null);
+      setDiscountInput('');
       toast.success('Pagamento completato! Appuntamento confermato.', {
         description: `+${Math.floor((currentService?.price || 0))} BiPoint guadagnati! 🪙`,
       });
     }, 1500);
+  };
+
+  const handleApplyDiscount = () => {
+    const code = discountInput.trim().toUpperCase();
+    const dc = discountCodes.find((d) => d.code === code && !d.used && d.discountPercent);
+    if (dc && dc.discountPercent) {
+      setAppliedDiscount({ code: dc.code, percent: dc.discountPercent });
+      toast.success(`Sconto ${dc.discountPercent}% applicato!`);
+    } else {
+      toast.error('Codice non valido o già utilizzato');
+    }
   };
 
   const handleCancel = (appointmentId: string) => {
