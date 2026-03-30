@@ -1,5 +1,6 @@
 // Mock data store for Bifase MVP
 import { create } from 'zustand';
+import { Invoice, createInvoice } from './invoices';
 
 export interface TimeSlot {
   id: string;
