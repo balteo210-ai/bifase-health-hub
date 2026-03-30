@@ -148,6 +148,8 @@ interface AppState {
   subscribe: () => void;
   bookAppointment: (serviceId: string, slotId: string, date: string) => void;
   cancelAppointment: (appointmentId: string) => void;
+  completeAppointment: (appointmentId: string) => void;
+  markNoShow: (appointmentId: string) => void;
   addProviderService: (service: Omit<Service, 'id'>) => void;
   removeProviderService: (serviceId: string) => void;
 }
