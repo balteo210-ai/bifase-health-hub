@@ -13,6 +13,7 @@ import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useGeolocation, getDistanceKm } from '@/hooks/use-geolocation';
+import InvoicesSection from '@/components/dashboard/InvoicesSection';
 
 const CitizenDashboard = () => {
   const { user, services, appointments, bookAppointment, cancelAppointment, logout } = useAppStore();
