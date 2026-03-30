@@ -93,6 +93,11 @@ const CitizenDashboard = () => {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <BifaseLogo size="navbar" />
           <div className="flex items-center gap-3">
+            <Link to="/bipremia" className="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-sm font-medium text-primary hover:bg-primary/20 transition-colors">
+              <Coins className="h-3.5 w-3.5" />
+              <span>{balance}</span>
+              <span className="text-xs">{tierInfo.icon}</span>
+            </Link>
             <span className="text-sm text-muted-foreground">Ciao, <span className="font-medium text-foreground">{user.name}</span></span>
             <Button variant="ghost" size="sm" onClick={() => { logout(); navigate('/'); }} className="text-muted-foreground hover:text-foreground">
               <LogOut className="h-4 w-4" />
