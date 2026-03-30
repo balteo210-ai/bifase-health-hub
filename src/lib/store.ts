@@ -284,6 +284,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     });
   },
 
+  addProviderService: (service) => {
     const id = `ps-${Date.now()}`;
     set((state) => ({
       providerServices: [...state.providerServices, { ...service, id }],
