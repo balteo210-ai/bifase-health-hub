@@ -33,7 +33,17 @@ export interface Reward {
   cost: number;
   tier: TierLevel;
   type: 'discount' | 'service' | 'prize';
+  discountPercent?: number;
   active: boolean;
+}
+
+export interface DiscountCode {
+  code: string;
+  rewardId: string;
+  rewardName: string;
+  discountPercent?: number;
+  used: boolean;
+  createdAt: string;
 }
 
 export interface ReferralInfo {
@@ -83,26 +93,26 @@ const DEFAULT_MISSIONS: Mission[] = [
 ];
 
 const DEFAULT_REWARDS: Reward[] = [
-  { id: 'r1', name: 'Sconto 5%', description: 'Sconto del 5% sulla prossima prenotazione', cost: 50, tier: 'base', type: 'discount', active: true },
-  { id: 'r2', name: 'Sconto 10%', description: 'Sconto del 10% sulla prossima prenotazione', cost: 100, tier: 'plus', type: 'discount', active: true },
-  { id: 'r3', name: 'Visita gratuita', description: 'Una visita generale gratuita', cost: 200, tier: 'premium', type: 'service', active: true },
-  { id: 'r4', name: 'Priorità prenotazione', description: 'Accesso prioritario agli slot per 30 giorni', cost: 75, tier: 'plus', type: 'prize', active: true },
-  { id: 'r5', name: 'Kit benessere', description: 'Kit benessere esclusivo Bifase', cost: 250, tier: 'premium', type: 'prize', active: true },
+  { id: 'r1', name: 'Sconto 5%', description: 'Sconto del 5% sulla prossima prenotazione', cost: 5000, tier: 'base', type: 'discount', discountPercent: 5, active: true },
+  { id: 'r2', name: 'Sconto 10%', description: 'Sconto del 10% sulla prossima prenotazione', cost: 10000, tier: 'plus', type: 'discount', discountPercent: 10, active: true },
+  { id: 'r3', name: 'Visita gratuita', description: 'Una visita generale gratuita', cost: 20000, tier: 'premium', type: 'service', discountPercent: 100, active: true },
+  { id: 'r4', name: 'Priorità prenotazione', description: 'Accesso prioritario agli slot per 30 giorni', cost: 7500, tier: 'plus', type: 'prize', active: true },
+  { id: 'r5', name: 'Kit benessere', description: 'Kit benessere esclusivo Bifase', cost: 25000, tier: 'premium', type: 'prize', active: true },
 ];
 
 // ── Helpers ────────────────────────────────────────────
 
 export function getTier(points: number): TierLevel {
-  if (points >= 250) return 'premium';
-  if (points >= 100) return 'plus';
+  if (points >= 25000) return 'premium';
+  if (points >= 10000) return 'plus';
   return 'base';
 }
 
 export function getTierInfo(tier: TierLevel) {
   const tiers = {
-    base: { label: 'Base', minPoints: 0, maxPoints: 99, color: 'text-muted-foreground', bg: 'bg-muted', icon: '🪙' },
-    plus: { label: 'Plus', minPoints: 100, maxPoints: 249, color: 'text-primary', bg: 'bg-primary/10', icon: '⭐' },
-    premium: { label: 'Premium', minPoints: 250, maxPoints: Infinity, color: 'text-amber-500', bg: 'bg-amber-500/10', icon: '👑' },
+    base: { label: 'Base', minPoints: 0, maxPoints: 9999, color: 'text-muted-foreground', bg: 'bg-muted', icon: '🪙' },
+    plus: { label: 'Plus', minPoints: 10000, maxPoints: 24999, color: 'text-primary', bg: 'bg-primary/10', icon: '⭐' },
+    premium: { label: 'Premium', minPoints: 25000, maxPoints: Infinity, color: 'text-amber-500', bg: 'bg-amber-500/10', icon: '👑' },
   };
   return tiers[tier];
 }
@@ -119,6 +129,7 @@ interface BiPremiaState {
   transactions: BiPointTransaction[];
   missions: Mission[];
   rewards: Reward[];
+  discountCodes: DiscountCode[];
   config: PointsConfig;
   referral: ReferralInfo;
   consecutiveAppointments: number;
@@ -134,7 +145,8 @@ interface BiPremiaState {
   earnReferral: (isInviter: boolean) => void;
 
   // Spend actions
-  redeemReward: (rewardId: string) => boolean;
+  redeemReward: (rewardId: string) => DiscountCode | null;
+  useDiscountCode: (code: string) => DiscountCode | null;
 
   // Mission actions
   updateMissionProgress: (missionId: string, increment?: number) => void;
@@ -156,6 +168,7 @@ export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
   ],
   missions: DEFAULT_MISSIONS,
   rewards: DEFAULT_REWARDS,
+  discountCodes: [],
   config: DEFAULT_CONFIG,
   referral: { code: generateReferralCode(), totalInvited: 0, totalEarned: 0 },
   consecutiveAppointments: 0,
@@ -231,21 +244,41 @@ export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
   redeemReward: (rewardId) => {
     const { rewards, balance } = get();
     const reward = rewards.find((r) => r.id === rewardId);
-    if (!reward || !reward.active || balance < reward.cost) return false;
+    if (!reward || !reward.active || balance < reward.cost) return null;
+
+    const discountCode: DiscountCode = {
+      code: 'BIFASE-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
+      rewardId: reward.id,
+      rewardName: reward.name,
+      discountPercent: reward.discountPercent,
+      used: false,
+      createdAt: new Date().toISOString(),
+    };
 
     const tx: BiPointTransaction = {
       id: `t-${Date.now()}`,
       type: 'spend',
       amount: reward.cost,
-      reason: `Premio: ${reward.name}`,
+      reason: `Premio: ${reward.name} → Codice: ${discountCode.code}`,
       date: new Date().toISOString(),
     };
 
     set((s) => ({
       balance: s.balance - reward.cost,
       transactions: [tx, ...s.transactions],
+      discountCodes: [discountCode, ...s.discountCodes],
     }));
-    return true;
+    return discountCode;
+  },
+
+  useDiscountCode: (code) => {
+    const { discountCodes } = get();
+    const dc = discountCodes.find((d) => d.code === code && !d.used);
+    if (!dc) return null;
+    set((s) => ({
+      discountCodes: s.discountCodes.map((d) => d.code === code ? { ...d, used: true } : d),
+    }));
+    return dc;
   },
 
   updateMissionProgress: (missionId, increment = 1) => {

@@ -22,11 +22,12 @@ type WalletTab = 'overview' | 'history' | 'rewards' | 'missions' | 'referral';
 
 const BiPremiaWallet = () => {
   const {
-    balance, totalEarned, transactions, missions, rewards, referral,
+    balance, totalEarned, transactions, missions, rewards, discountCodes, referral,
     redeemReward, earnReferral, earnReview,
   } = useBiPremiaStore();
   const [tab, setTab] = useState<WalletTab>('overview');
   const [copied, setCopied] = useState(false);
+  const [lastCode, setLastCode] = useState<string | null>(null);
 
   const tier = getTier(totalEarned);
   const tierInfo = getTierInfo(tier);
@@ -39,9 +40,16 @@ const BiPremiaWallet = () => {
   const availableRewards = rewards.filter((r) => r.active);
 
   const handleRedeem = (rewardId: string, name: string) => {
-    const success = redeemReward(rewardId);
-    if (success) toast.success(`Premio riscattato: ${name}!`);
-    else toast.error('BiPoint insufficienti');
+    const result = redeemReward(rewardId);
+    if (result) {
+      setLastCode(result.code);
+      toast.success(`Premio riscattato! Il tuo codice: ${result.code}`, {
+        description: 'Inseriscilo al momento della prenotazione',
+        duration: 8000,
+      });
+    } else {
+      toast.error('BiPoint insufficienti');
+    }
   };
 
   const handleCopyReferral = () => {
@@ -263,6 +271,33 @@ const BiPremiaWallet = () => {
                   </motion.div>
                 );
               })}
+
+              {/* Active discount codes */}
+              {discountCodes.length > 0 && (
+                <div className="rounded-2xl border border-primary/20 bg-primary/[0.04] p-5 mt-4">
+                  <h4 className="font-display font-bold text-foreground mb-3 flex items-center gap-2">
+                    🎟️ I tuoi codici sconto
+                  </h4>
+                  <div className="space-y-2">
+                    {discountCodes.map((dc) => (
+                      <div key={dc.code} className={`flex items-center justify-between rounded-xl bg-card p-3 border border-border/60 ${dc.used ? 'opacity-50' : ''}`}>
+                        <div>
+                          <code className="font-mono font-bold text-foreground tracking-wider">{dc.code}</code>
+                          <p className="text-xs text-muted-foreground">{dc.rewardName}{dc.used ? ' · Utilizzato' : ''}</p>
+                        </div>
+                        {!dc.used && (
+                          <Button size="sm" variant="ghost" className="rounded-full" onClick={() => {
+                            navigator.clipboard.writeText(dc.code);
+                            toast.success('Codice copiato!');
+                          }}>
+                            <Copy className="h-3.5 w-3.5" />
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
