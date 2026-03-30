@@ -138,6 +138,7 @@ interface AppState {
   user: User | null;
   services: Service[];
   appointments: Appointment[];
+  invoices: Invoice[];
   providerServices: Service[];
   providerAppointments: Appointment[];
   login: (user: User) => void;
