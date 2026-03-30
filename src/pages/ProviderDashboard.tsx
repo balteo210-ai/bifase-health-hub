@@ -302,6 +302,12 @@ const ProviderDashboard = () => {
             )}
           </div>
         </div>
+
+        {/* Reminder & Salvagente Section */}
+        <div className="mt-8 grid gap-8 lg:grid-cols-2">
+          <ReminderSettings />
+          <NoShowRecovery />
+        </div>
       </div>
     </div>
   );
