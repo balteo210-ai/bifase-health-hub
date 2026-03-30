@@ -61,6 +61,8 @@ export interface PointsConfig {
   appointmentCompleted: number;
   earlyBooking: number;
   noShowRecovery: number;
+  rebooking48h: number;
+  pathCompletion: number;
   streakBonus: number;
   streakTarget: number;
   expirationDays: number | null;
@@ -70,34 +72,50 @@ export interface PointsConfig {
 // ── Defaults ───────────────────────────────────────────
 
 const DEFAULT_CONFIG: PointsConfig = {
-  registration: 20,
-  perEuro: 1,
-  referralInviter: 30,
-  referralInvited: 20,
-  review: 10,
-  appointmentCompleted: 15,
-  earlyBooking: 10,
-  noShowRecovery: 10,
-  streakBonus: 20,
+  registration: 200,
+  perEuro: 10,
+  referralInviter: 300,
+  referralInvited: 200,
+  review: 100,
+  appointmentCompleted: 200,
+  earlyBooking: 100,
+  noShowRecovery: 150,
+  rebooking48h: 150,
+  pathCompletion: 500,
+  streakBonus: 300,
   streakTarget: 3,
   expirationDays: null,
   maxAccumulation: null,
 };
 
 const DEFAULT_MISSIONS: Mission[] = [
-  { id: 'm1', title: 'Prima prenotazione', description: 'Completa il tuo primo appuntamento', reward: 15, target: 1, progress: 0, completed: false, active: true, icon: 'calendar' },
-  { id: 'm2', title: 'Abitudinario', description: 'Completa 3 appuntamenti consecutivi', reward: 20, target: 3, progress: 0, completed: false, active: true, icon: 'flame' },
-  { id: 'm3', title: 'Passaparola', description: 'Invita un amico che completa un\'azione', reward: 30, target: 1, progress: 0, completed: false, active: true, icon: 'users' },
-  { id: 'm4', title: 'Recensore', description: 'Lascia 3 recensioni', reward: 30, target: 3, progress: 0, completed: false, active: true, icon: 'star' },
-  { id: 'm5', title: 'Esploratore', description: 'Prenota 3 servizi diversi in 30 giorni', reward: 25, target: 3, progress: 0, completed: false, active: true, icon: 'compass' },
+  { id: 'm1', title: 'Prima prenotazione', description: 'Completa il tuo primo appuntamento', reward: 200, target: 1, progress: 0, completed: false, active: true, icon: 'calendar' },
+  { id: 'm2', title: 'Abitudinario', description: 'Completa 3 appuntamenti consecutivi', reward: 300, target: 3, progress: 0, completed: false, active: true, icon: 'flame' },
+  { id: 'm3', title: 'Passaparola', description: 'Invita un amico che completa un\'azione', reward: 300, target: 1, progress: 0, completed: false, active: true, icon: 'users' },
+  { id: 'm4', title: 'Recensore', description: 'Lascia 3 recensioni', reward: 300, target: 3, progress: 0, completed: false, active: true, icon: 'star' },
+  { id: 'm5', title: 'Esploratore', description: 'Prenota 3 servizi diversi in 30 giorni', reward: 500, target: 3, progress: 0, completed: false, active: true, icon: 'compass' },
+  { id: 'm6', title: 'Prenota in anticipo', description: 'Fai 2 prenotazioni con almeno 7 giorni di anticipo', reward: 200, target: 2, progress: 0, completed: false, active: true, icon: 'clock' },
 ];
 
 const DEFAULT_REWARDS: Reward[] = [
-  { id: 'r1', name: 'Sconto 5%', description: 'Sconto del 5% sulla prossima prenotazione', cost: 5000, tier: 'base', type: 'discount', discountPercent: 5, active: true },
-  { id: 'r2', name: 'Sconto 10%', description: 'Sconto del 10% sulla prossima prenotazione', cost: 10000, tier: 'plus', type: 'discount', discountPercent: 10, active: true },
-  { id: 'r3', name: 'Visita gratuita', description: 'Una visita generale gratuita', cost: 20000, tier: 'premium', type: 'service', discountPercent: 100, active: true },
-  { id: 'r4', name: 'Priorità prenotazione', description: 'Accesso prioritario agli slot per 30 giorni', cost: 7500, tier: 'plus', type: 'prize', active: true },
-  { id: 'r5', name: 'Kit benessere', description: 'Kit benessere esclusivo Bifase', cost: 25000, tier: 'premium', type: 'prize', active: true },
+  // ⚡ Entry Level
+  { id: 'r1', name: 'Prenotazioni agevolate', description: 'Accesso a prenotazioni a condizioni agevolate', cost: 1000, tier: 'base', type: 'service', active: true },
+  { id: 'r2', name: 'Sconto 3%', description: 'Piccolo sconto o credito prenotazione', cost: 2500, tier: 'base', type: 'discount', discountPercent: 3, active: true },
+  // 🟢 Base
+  { id: 'r3', name: 'Consulenza breve', description: 'Check-up rapido o consulenza breve', cost: 3000, tier: 'base', type: 'service', active: true },
+  { id: 'r4', name: 'Sconto 5%', description: 'Sconto del 5% su un servizio', cost: 5000, tier: 'base', type: 'discount', discountPercent: 5, active: true },
+  // 🔵 Plus
+  { id: 'r5', name: 'Priorità prenotazione', description: 'Accesso prioritario agli slot per 30 giorni', cost: 7500, tier: 'plus', type: 'prize', active: true },
+  { id: 'r6', name: 'Sconto 10%', description: 'Sconto del 10% sulla prossima prenotazione', cost: 10000, tier: 'plus', type: 'discount', discountPercent: 10, active: true },
+  { id: 'r7', name: 'Upgrade servizio', description: 'Tempo extra o consulenza aggiuntiva inclusa', cost: 12000, tier: 'plus', type: 'service', active: true },
+  // 🟣 Premium
+  { id: 'r8', name: 'Prestazione gratuita', description: 'Una prestazione completamente gratuita', cost: 20000, tier: 'premium', type: 'service', discountPercent: 100, active: true },
+  { id: 'r9', name: 'Pacchetto servizi premium', description: 'Pacchetto esclusivo di servizi premium', cost: 25000, tier: 'premium', type: 'service', active: true },
+  { id: 'r10', name: 'Esperienza completa', description: 'Servizio + priorità + bonus BiPoint', cost: 30000, tier: 'premium', type: 'service', active: true },
+  // 🛟 Premi comportamentali
+  { id: 'r11', name: 'Salvagente appuntamento', description: 'Protezione no-show: riprenotazione senza penalità', cost: 3000, tier: 'base', type: 'prize', active: true },
+  { id: 'r12', name: 'Bonus ritorno rapido', description: 'Credito per riprenotazione entro 48h', cost: 2500, tier: 'base', type: 'prize', active: true },
+  { id: 'r13', name: 'Bonus percorso completato', description: 'Premio per completamento percorso di cura', cost: 5000, tier: 'base', type: 'prize', active: true },
 ];
 
 // ── Helpers ────────────────────────────────────────────
@@ -141,6 +159,8 @@ interface BiPremiaState {
   earnAppointmentCompleted: () => void;
   earnEarlyBooking: () => void;
   earnNoShowRecovery: () => void;
+  earnRebooking48h: () => void;
+  earnPathCompletion: () => void;
   earnReview: () => void;
   earnReferral: (isInviter: boolean) => void;
 
@@ -161,10 +181,10 @@ interface BiPremiaState {
 }
 
 export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
-  balance: 20, // Registration bonus already applied
-  totalEarned: 20,
+  balance: 200, // Registration bonus already applied
+  totalEarned: 200,
   transactions: [
-    { id: 't0', type: 'earn', amount: 20, reason: 'Bonus registrazione', date: new Date().toISOString() },
+    { id: 't0', type: 'earn', amount: 200, reason: 'Bonus registrazione', date: new Date().toISOString() },
   ],
   missions: DEFAULT_MISSIONS,
   rewards: DEFAULT_REWARDS,
@@ -198,7 +218,7 @@ export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
   },
 
   earnRegistration: () => get().earnPoints(get().config.registration, 'Bonus registrazione'),
-  earnPurchase: (euroAmount) => get().earnPoints(Math.floor(euroAmount * get().config.perEuro), `Acquisto €${euroAmount.toFixed(2)}`),
+  earnPurchase: (euroAmount) => get().earnPoints(Math.floor(euroAmount * get().config.perEuro), `Acquisto €${euroAmount.toFixed(2)} → ${Math.floor(euroAmount * get().config.perEuro)} BiPoint`),
 
   earnAppointmentCompleted: () => {
     const { config, consecutiveAppointments } = get();
@@ -218,8 +238,13 @@ export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
     get().updateMissionProgress('m5');
   },
 
-  earnEarlyBooking: () => get().earnPoints(get().config.earlyBooking, 'Prenotazione anticipata'),
+  earnEarlyBooking: () => {
+    get().earnPoints(get().config.earlyBooking, 'Prenotazione anticipata');
+    get().updateMissionProgress('m6');
+  },
   earnNoShowRecovery: () => get().earnPoints(get().config.noShowRecovery, 'Riprenotazione dopo no-show'),
+  earnRebooking48h: () => get().earnPoints(get().config.rebooking48h, 'Riprenotazione entro 48h'),
+  earnPathCompletion: () => get().earnPoints(get().config.pathCompletion, 'Completamento percorso di cura'),
   earnReview: () => {
     get().earnPoints(get().config.review, 'Recensione lasciata');
     get().updateMissionProgress('m4');
