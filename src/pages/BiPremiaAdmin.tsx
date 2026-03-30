@@ -37,6 +37,8 @@ const BiPremiaAdmin = () => {
     { key: 'appointmentCompleted' as const, label: 'Appuntamento completato', suffix: 'BiPoint' },
     { key: 'earlyBooking' as const, label: 'Prenotazione anticipata', suffix: 'BiPoint' },
     { key: 'noShowRecovery' as const, label: 'Riprenotazione no-show', suffix: 'BiPoint' },
+    { key: 'rebooking48h' as const, label: 'Riprenotazione entro 48h', suffix: 'BiPoint' },
+    { key: 'pathCompletion' as const, label: 'Completamento percorso', suffix: 'BiPoint' },
     { key: 'streakBonus' as const, label: 'Bonus serie consecutiva', suffix: 'BiPoint' },
     { key: 'streakTarget' as const, label: 'App. per bonus serie', suffix: 'appuntamenti' },
   ];
