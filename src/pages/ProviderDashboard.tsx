@@ -11,6 +11,8 @@ import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { motion } from 'framer-motion';
+import ReminderSettings from '@/components/dashboard/ReminderSettings';
+import NoShowRecovery from '@/components/dashboard/NoShowRecovery';
 
 const ProviderDashboard = () => {
   const { user, providerServices, providerAppointments, addProviderService, removeProviderService, cancelAppointment, logout, subscribe } = useAppStore();
