@@ -40,9 +40,16 @@ const BiPremiaWallet = () => {
   const availableRewards = rewards.filter((r) => r.active);
 
   const handleRedeem = (rewardId: string, name: string) => {
-    const success = redeemReward(rewardId);
-    if (success) toast.success(`Premio riscattato: ${name}!`);
-    else toast.error('BiPoint insufficienti');
+    const result = redeemReward(rewardId);
+    if (result) {
+      setLastCode(result.code);
+      toast.success(`Premio riscattato! Il tuo codice: ${result.code}`, {
+        description: 'Inseriscilo al momento della prenotazione',
+        duration: 8000,
+      });
+    } else {
+      toast.error('BiPoint insufficienti');
+    }
   };
 
   const handleCopyReferral = () => {
