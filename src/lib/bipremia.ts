@@ -94,11 +94,24 @@ const DEFAULT_MISSIONS: Mission[] = [
 ];
 
 const DEFAULT_REWARDS: Reward[] = [
-  { id: 'r1', name: 'Sconto 5%', description: 'Sconto del 5% sulla prossima prenotazione', cost: 5000, tier: 'base', type: 'discount', discountPercent: 5, active: true },
-  { id: 'r2', name: 'Sconto 10%', description: 'Sconto del 10% sulla prossima prenotazione', cost: 10000, tier: 'plus', type: 'discount', discountPercent: 10, active: true },
-  { id: 'r3', name: 'Visita gratuita', description: 'Una visita generale gratuita', cost: 20000, tier: 'premium', type: 'service', discountPercent: 100, active: true },
-  { id: 'r4', name: 'Priorità prenotazione', description: 'Accesso prioritario agli slot per 30 giorni', cost: 7500, tier: 'plus', type: 'prize', active: true },
-  { id: 'r5', name: 'Kit benessere', description: 'Kit benessere esclusivo Bifase', cost: 25000, tier: 'premium', type: 'prize', active: true },
+  // ⚡ Entry Level
+  { id: 'r1', name: 'Prenotazioni agevolate', description: 'Accesso a prenotazioni a condizioni agevolate', cost: 1000, tier: 'base', type: 'service', active: true },
+  { id: 'r2', name: 'Sconto 3%', description: 'Piccolo sconto o credito prenotazione', cost: 2500, tier: 'base', type: 'discount', discountPercent: 3, active: true },
+  // 🟢 Base
+  { id: 'r3', name: 'Consulenza breve', description: 'Check-up rapido o consulenza breve', cost: 3000, tier: 'base', type: 'service', active: true },
+  { id: 'r4', name: 'Sconto 5%', description: 'Sconto del 5% su un servizio', cost: 5000, tier: 'base', type: 'discount', discountPercent: 5, active: true },
+  // 🔵 Plus
+  { id: 'r5', name: 'Priorità prenotazione', description: 'Accesso prioritario agli slot per 30 giorni', cost: 7500, tier: 'plus', type: 'prize', active: true },
+  { id: 'r6', name: 'Sconto 10%', description: 'Sconto del 10% sulla prossima prenotazione', cost: 10000, tier: 'plus', type: 'discount', discountPercent: 10, active: true },
+  { id: 'r7', name: 'Upgrade servizio', description: 'Tempo extra o consulenza aggiuntiva inclusa', cost: 12000, tier: 'plus', type: 'service', active: true },
+  // 🟣 Premium
+  { id: 'r8', name: 'Prestazione gratuita', description: 'Una prestazione completamente gratuita', cost: 20000, tier: 'premium', type: 'service', discountPercent: 100, active: true },
+  { id: 'r9', name: 'Pacchetto servizi premium', description: 'Pacchetto esclusivo di servizi premium', cost: 25000, tier: 'premium', type: 'service', active: true },
+  { id: 'r10', name: 'Esperienza completa', description: 'Servizio + priorità + bonus BiPoint', cost: 30000, tier: 'premium', type: 'service', active: true },
+  // 🛟 Premi comportamentali
+  { id: 'r11', name: 'Salvagente appuntamento', description: 'Protezione no-show: riprenotazione senza penalità', cost: 3000, tier: 'base', type: 'prize', active: true },
+  { id: 'r12', name: 'Bonus ritorno rapido', description: 'Credito per riprenotazione entro 48h', cost: 2500, tier: 'base', type: 'prize', active: true },
+  { id: 'r13', name: 'Bonus percorso completato', description: 'Premio per completamento percorso di cura', cost: 5000, tier: 'base', type: 'prize', active: true },
 ];
 
 // ── Helpers ────────────────────────────────────────────
