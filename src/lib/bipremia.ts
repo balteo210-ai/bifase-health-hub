@@ -110,9 +110,9 @@ export function getTier(points: number): TierLevel {
 
 export function getTierInfo(tier: TierLevel) {
   const tiers = {
-    base: { label: 'Base', minPoints: 0, maxPoints: 99, color: 'text-muted-foreground', bg: 'bg-muted', icon: '🪙' },
-    plus: { label: 'Plus', minPoints: 100, maxPoints: 249, color: 'text-primary', bg: 'bg-primary/10', icon: '⭐' },
-    premium: { label: 'Premium', minPoints: 250, maxPoints: Infinity, color: 'text-amber-500', bg: 'bg-amber-500/10', icon: '👑' },
+    base: { label: 'Base', minPoints: 0, maxPoints: 9999, color: 'text-muted-foreground', bg: 'bg-muted', icon: '🪙' },
+    plus: { label: 'Plus', minPoints: 10000, maxPoints: 24999, color: 'text-primary', bg: 'bg-primary/10', icon: '⭐' },
+    premium: { label: 'Premium', minPoints: 25000, maxPoints: Infinity, color: 'text-amber-500', bg: 'bg-amber-500/10', icon: '👑' },
   };
   return tiers[tier];
 }
