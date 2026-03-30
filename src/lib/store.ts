@@ -30,7 +30,9 @@ export interface Appointment {
   date: string;
   price: number;
   commission: number;
-  status: 'confirmed' | 'cancelled';
+  status: 'confirmed' | 'cancelled' | 'completed' | 'no-show';
+  patientName?: string;
+  patientPhone?: string;
 }
 
 export interface User {
@@ -146,6 +148,8 @@ interface AppState {
   subscribe: () => void;
   bookAppointment: (serviceId: string, slotId: string, date: string) => void;
   cancelAppointment: (appointmentId: string) => void;
+  completeAppointment: (appointmentId: string) => void;
+  markNoShow: (appointmentId: string) => void;
   addProviderService: (service: Omit<Service, 'id'>) => void;
   removeProviderService: (serviceId: string) => void;
 }
@@ -186,6 +190,36 @@ export const useAppStore = create<AppState>((set, get) => ({
       price: 75,
       commission: 75 * COMMISSION_RATE,
       status: 'confirmed',
+      patientName: 'Marco Rossi',
+      patientPhone: '+39 333 1234567',
+    },
+    {
+      id: 'pa2',
+      serviceId: 'p1',
+      serviceName: 'Visita Generale',
+      providerName: 'La Mia Clinica',
+      location: 'Milano Centro',
+      time: '09:00',
+      date: '2026-03-25',
+      price: 75,
+      commission: 75 * COMMISSION_RATE,
+      status: 'completed',
+      patientName: 'Giulia Bianchi',
+      patientPhone: '+39 338 7654321',
+    },
+    {
+      id: 'pa3',
+      serviceId: 'p1',
+      serviceName: 'Visita Generale',
+      providerName: 'La Mia Clinica',
+      location: 'Milano Centro',
+      time: '14:00',
+      date: '2026-03-28',
+      price: 75,
+      commission: 75 * COMMISSION_RATE,
+      status: 'confirmed',
+      patientName: 'Luca Verdi',
+      patientPhone: '+39 340 9876543',
     },
   ],
 
@@ -252,6 +286,30 @@ export const useAppStore = create<AppState>((set, get) => ({
       ),
       providerAppointments: providerAppointments.map((a) =>
         a.id === appointmentId ? { ...a, status: 'cancelled' as const } : a
+      ),
+    });
+  },
+
+  completeAppointment: (appointmentId) => {
+    const { appointments, providerAppointments } = get();
+    set({
+      appointments: appointments.map((a) =>
+        a.id === appointmentId ? { ...a, status: 'completed' as const } : a
+      ),
+      providerAppointments: providerAppointments.map((a) =>
+        a.id === appointmentId ? { ...a, status: 'completed' as const } : a
+      ),
+    });
+  },
+
+  markNoShow: (appointmentId) => {
+    const { appointments, providerAppointments } = get();
+    set({
+      appointments: appointments.map((a) =>
+        a.id === appointmentId ? { ...a, status: 'no-show' as const } : a
+      ),
+      providerAppointments: providerAppointments.map((a) =>
+        a.id === appointmentId ? { ...a, status: 'no-show' as const } : a
       ),
     });
   },

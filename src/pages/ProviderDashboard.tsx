@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useAppStore, COMMISSION_RATE, SUBSCRIPTION_PRICE } from '@/lib/store';
 import { LogOut, Plus, Trash2, Calendar, Users, Clock, X, CheckCircle2, Euro, Crown, ShieldCheck, Bell, LifeBuoy, Coins } from 'lucide-react';
+import ProviderAppointments from '@/components/dashboard/ProviderAppointments';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -15,7 +16,7 @@ import ReminderSettings from '@/components/dashboard/ReminderSettings';
 import NoShowRecovery from '@/components/dashboard/NoShowRecovery';
 
 const ProviderDashboard = () => {
-  const { user, providerServices, providerAppointments, addProviderService, removeProviderService, cancelAppointment, logout, subscribe } = useAppStore();
+  const { user, providerServices, providerAppointments, addProviderService, removeProviderService, cancelAppointment, completeAppointment, markNoShow, logout, subscribe } = useAppStore();
   const navigate = useNavigate();
   const [newName, setNewName] = useState('');
   const [newType, setNewType] = useState('');
@@ -263,43 +264,12 @@ const ProviderDashboard = () => {
 
           <div>
             <h2 className="mb-5 font-display text-xl font-bold text-foreground">Appuntamenti</h2>
-            {providerAppointments.length === 0 ? (
-              <div className="rounded-2xl border border-border/60 bg-card p-8 text-center shadow-sm"><p className="text-muted-foreground">Nessun appuntamento</p></div>
-            ) : (
-              <div className="space-y-3">
-                {providerAppointments.map((apt, i) => (
-                  <motion.div
-                    key={apt.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: i * 0.05 }}
-                    className="rounded-2xl border border-border/60 bg-card p-4 card-elevated"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          {apt.status === 'confirmed' ? <CheckCircle2 className="h-4 w-4 text-success" /> : <X className="h-4 w-4 text-destructive" />}
-                          <span className="font-display font-semibold text-foreground">{apt.serviceName}</span>
-                        </div>
-                        <p className="mt-1 text-sm text-muted-foreground">{apt.date} alle {apt.time}</p>
-                        <div className="mt-2 flex items-center gap-3">
-                          <span className="text-sm font-medium text-foreground">€{apt.price.toFixed(2)}</span>
-                          <span className="text-xs text-muted-foreground">- €{apt.commission.toFixed(2)} comm.</span>
-                          <Badge variant={apt.status === 'confirmed' ? 'default' : 'destructive'} className="rounded-full text-xs">
-                            {apt.status === 'confirmed' ? 'confermato' : 'cancellato'}
-                          </Badge>
-                        </div>
-                      </div>
-                      {apt.status === 'confirmed' && (
-                        <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive" onClick={() => handleCancelAppointment(apt.id)}>
-                          Cancella
-                        </Button>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+            <ProviderAppointments
+              appointments={providerAppointments}
+              onCancel={handleCancelAppointment}
+              onComplete={completeAppointment}
+              onNoShow={markNoShow}
+            />
           </div>
         </div>
 
