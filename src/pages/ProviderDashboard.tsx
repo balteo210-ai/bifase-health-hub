@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useAppStore, COMMISSION_RATE, SUBSCRIPTION_PRICE } from '@/lib/store';
-import { LogOut, Plus, Trash2, Calendar, Users, Clock, X, CheckCircle2, Euro, Crown, ShieldCheck, Bell, LifeBuoy } from 'lucide-react';
+import { LogOut, Plus, Trash2, Calendar, Users, Clock, X, CheckCircle2, Euro, Crown, ShieldCheck, Bell, LifeBuoy, Coins } from 'lucide-react';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -307,6 +307,16 @@ const ProviderDashboard = () => {
         <div className="mt-8 grid gap-8 lg:grid-cols-2">
           <ReminderSettings />
           <NoShowRecovery />
+        </div>
+
+        {/* BiPremia Admin Link */}
+        <div className="mt-8">
+          <Link to="/bipremia/admin">
+            <Button variant="outline" className="w-full rounded-2xl h-14 gap-2 text-base">
+              <Coins className="h-5 w-5 text-primary" />
+              Gestisci BiPremia — Programma Fedeltà
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

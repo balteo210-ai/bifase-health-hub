@@ -11,6 +11,8 @@ import Register from "./pages/Register";
 import CitizenDashboard from "./pages/CitizenDashboard";
 import ProviderDashboard from "./pages/ProviderDashboard";
 import ExplorePage from "./pages/ExplorePage";
+import BiPremiaPage from "./pages/BiPremiaPage";
+import BiPremiaAdmin from "./pages/BiPremiaAdmin";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<CitizenDashboard />} />
           <Route path="/provider" element={<ProviderDashboard />} />
+          <Route path="/bipremia" element={<BiPremiaPage />} />
+          <Route path="/bipremia/admin" element={<BiPremiaAdmin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
