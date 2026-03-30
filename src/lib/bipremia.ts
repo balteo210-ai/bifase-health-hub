@@ -129,6 +129,7 @@ interface BiPremiaState {
   transactions: BiPointTransaction[];
   missions: Mission[];
   rewards: Reward[];
+  discountCodes: DiscountCode[];
   config: PointsConfig;
   referral: ReferralInfo;
   consecutiveAppointments: number;
@@ -144,7 +145,8 @@ interface BiPremiaState {
   earnReferral: (isInviter: boolean) => void;
 
   // Spend actions
-  redeemReward: (rewardId: string) => boolean;
+  redeemReward: (rewardId: string) => DiscountCode | null;
+  useDiscountCode: (code: string) => DiscountCode | null;
 
   // Mission actions
   updateMissionProgress: (missionId: string, increment?: number) => void;
