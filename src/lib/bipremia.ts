@@ -238,8 +238,13 @@ export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
     get().updateMissionProgress('m5');
   },
 
-  earnEarlyBooking: () => get().earnPoints(get().config.earlyBooking, 'Prenotazione anticipata'),
+  earnEarlyBooking: () => {
+    get().earnPoints(get().config.earlyBooking, 'Prenotazione anticipata');
+    get().updateMissionProgress('m6');
+  },
   earnNoShowRecovery: () => get().earnPoints(get().config.noShowRecovery, 'Riprenotazione dopo no-show'),
+  earnRebooking48h: () => get().earnPoints(get().config.rebooking48h, 'Riprenotazione entro 48h'),
+  earnPathCompletion: () => get().earnPoints(get().config.pathCompletion, 'Completamento percorso di cura'),
   earnReview: () => {
     get().earnPoints(get().config.review, 'Recensione lasciata');
     get().updateMissionProgress('m4');
