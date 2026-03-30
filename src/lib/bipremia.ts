@@ -244,21 +244,41 @@ export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
   redeemReward: (rewardId) => {
     const { rewards, balance } = get();
     const reward = rewards.find((r) => r.id === rewardId);
-    if (!reward || !reward.active || balance < reward.cost) return false;
+    if (!reward || !reward.active || balance < reward.cost) return null;
+
+    const discountCode: DiscountCode = {
+      code: 'BIFASE-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
+      rewardId: reward.id,
+      rewardName: reward.name,
+      discountPercent: reward.discountPercent,
+      used: false,
+      createdAt: new Date().toISOString(),
+    };
 
     const tx: BiPointTransaction = {
       id: `t-${Date.now()}`,
       type: 'spend',
       amount: reward.cost,
-      reason: `Premio: ${reward.name}`,
+      reason: `Premio: ${reward.name} → Codice: ${discountCode.code}`,
       date: new Date().toISOString(),
     };
 
     set((s) => ({
       balance: s.balance - reward.cost,
       transactions: [tx, ...s.transactions],
+      discountCodes: [discountCode, ...s.discountCodes],
     }));
-    return true;
+    return discountCode;
+  },
+
+  useDiscountCode: (code) => {
+    const { discountCodes } = get();
+    const dc = discountCodes.find((d) => d.code === code && !d.used);
+    if (!dc) return null;
+    set((s) => ({
+      discountCodes: s.discountCodes.map((d) => d.code === code ? { ...d, used: true } : d),
+    }));
+    return dc;
   },
 
   updateMissionProgress: (missionId, increment = 1) => {
