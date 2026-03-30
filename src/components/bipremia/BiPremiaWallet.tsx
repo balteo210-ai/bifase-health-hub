@@ -182,7 +182,7 @@ const BiPremiaWallet = () => {
                 <Button
                   variant="outline"
                   className="rounded-2xl h-auto py-4 flex-col gap-2"
-                  onClick={() => { earnReview(); toast.success('+10 BiPoint per la recensione!'); }}
+                  onClick={() => { earnReview(); toast.success('+100 BiPoint per la recensione!'); }}
                 >
                   <Star className="h-5 w-5 text-primary" />
                   <span className="text-xs">Lascia recensione</span>
