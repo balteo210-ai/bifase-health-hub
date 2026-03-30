@@ -30,7 +30,9 @@ export interface Appointment {
   date: string;
   price: number;
   commission: number;
-  status: 'confirmed' | 'cancelled';
+  status: 'confirmed' | 'cancelled' | 'completed' | 'no-show';
+  patientName?: string;
+  patientPhone?: string;
 }
 
 export interface User {
