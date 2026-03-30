@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useAppStore, COMMISSION_RATE, SUBSCRIPTION_PRICE } from '@/lib/store';
-import { LogOut, Plus, Trash2, Calendar, Users, Clock, X, CheckCircle2, Euro, Crown, ShieldCheck } from 'lucide-react';
+import { LogOut, Plus, Trash2, Calendar, Users, Clock, X, CheckCircle2, Euro, Crown, ShieldCheck, Bell, LifeBuoy } from 'lucide-react';
 import { toast } from 'sonner';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
