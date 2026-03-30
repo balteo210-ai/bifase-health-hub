@@ -103,8 +103,8 @@ const DEFAULT_REWARDS: Reward[] = [
 // ── Helpers ────────────────────────────────────────────
 
 export function getTier(points: number): TierLevel {
-  if (points >= 250) return 'premium';
-  if (points >= 100) return 'plus';
+  if (points >= 25000) return 'premium';
+  if (points >= 10000) return 'plus';
   return 'base';
 }
 
