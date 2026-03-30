@@ -212,7 +212,7 @@ export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
   },
 
   earnRegistration: () => get().earnPoints(get().config.registration, 'Bonus registrazione'),
-  earnPurchase: (euroAmount) => get().earnPoints(Math.floor(euroAmount * get().config.perEuro), `Acquisto €${euroAmount.toFixed(2)}`),
+  earnPurchase: (euroAmount) => get().earnPoints(Math.floor(euroAmount * get().config.perEuro), `Acquisto €${euroAmount.toFixed(2)} → ${Math.floor(euroAmount * get().config.perEuro)} BiPoint`),
 
   earnAppointmentCompleted: () => {
     const { config, consecutiveAppointments } = get();

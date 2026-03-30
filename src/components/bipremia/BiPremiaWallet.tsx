@@ -367,7 +367,7 @@ const BiPremiaWallet = () => {
 
               <Button
                 className="w-full rounded-xl gap-2"
-                onClick={() => { earnReferral(true); toast.success('+30 BiPoint! Amico invitato con successo.'); }}
+                onClick={() => { earnReferral(true); toast.success('+300 BiPoint! Amico invitato con successo.'); }}
               >
                 <Users className="h-4 w-4" /> Simula invito amico
               </Button>
