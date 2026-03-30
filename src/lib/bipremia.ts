@@ -80,6 +80,8 @@ const DEFAULT_CONFIG: PointsConfig = {
   appointmentCompleted: 200,
   earlyBooking: 100,
   noShowRecovery: 150,
+  rebooking48h: 150,
+  pathCompletion: 500,
   streakBonus: 300,
   streakTarget: 3,
   expirationDays: null,
