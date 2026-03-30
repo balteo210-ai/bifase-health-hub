@@ -175,10 +175,10 @@ interface BiPremiaState {
 }
 
 export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
-  balance: 20, // Registration bonus already applied
-  totalEarned: 20,
+  balance: 200, // Registration bonus already applied
+  totalEarned: 200,
   transactions: [
-    { id: 't0', type: 'earn', amount: 20, reason: 'Bonus registrazione', date: new Date().toISOString() },
+    { id: 't0', type: 'earn', amount: 200, reason: 'Bonus registrazione', date: new Date().toISOString() },
   ],
   missions: DEFAULT_MISSIONS,
   rewards: DEFAULT_REWARDS,
