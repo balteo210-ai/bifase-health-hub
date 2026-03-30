@@ -344,11 +344,60 @@ const CitizenDashboard = () => {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-border/60 p-4">
-                <div className="flex justify-between font-semibold">
-                  <span className="text-foreground">Totale da pagare</span>
-                  <span className="text-primary text-lg">€{currentService.price.toFixed(2)}</span>
+              {/* Discount code input */}
+              <div className="rounded-2xl border border-border/60 p-4 space-y-3">
+                <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+                  <Tag className="h-4 w-4 text-primary" />
+                  Codice sconto BiPremia
                 </div>
+                {appliedDiscount ? (
+                  <div className="flex items-center justify-between rounded-xl bg-success/10 p-3">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-success" />
+                      <span className="text-sm font-medium text-success">Sconto {appliedDiscount.percent}% applicato</span>
+                    </div>
+                    <Button size="sm" variant="ghost" className="text-destructive text-xs" onClick={() => { setAppliedDiscount(null); setDiscountInput(''); }}>
+                      Rimuovi
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      value={discountInput}
+                      onChange={(e) => setDiscountInput(e.target.value.toUpperCase())}
+                      placeholder="es. BIFASE-ABC123"
+                      className="h-9 rounded-lg font-mono text-sm"
+                    />
+                    <Button size="sm" variant="outline" className="rounded-lg shrink-0" onClick={handleApplyDiscount} disabled={!discountInput.trim()}>
+                      Applica
+                    </Button>
+                  </div>
+                )}
+              </div>
+
+              {/* Total */}
+              <div className="rounded-2xl border border-border/60 p-4">
+                {appliedDiscount ? (
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                      <span>Subtotale</span>
+                      <span className="line-through">€{currentService.price.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-success">
+                      <span>Sconto {appliedDiscount.percent}%</span>
+                      <span>-€{(currentService.price * appliedDiscount.percent / 100).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between font-semibold pt-1 border-t border-border/40">
+                      <span className="text-foreground">Totale da pagare</span>
+                      <span className="text-primary text-lg">€{(currentService.price * (1 - appliedDiscount.percent / 100)).toFixed(2)}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex justify-between font-semibold">
+                    <span className="text-foreground">Totale da pagare</span>
+                    <span className="text-primary text-lg">€{currentService.price.toFixed(2)}</span>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -356,22 +405,30 @@ const CitizenDashboard = () => {
                 Pagamento sicuro e protetto
               </div>
 
-              <Button
-                onClick={handleConfirmPayment}
-                disabled={paying}
-                className="h-12 w-full rounded-xl text-base shadow-lg shadow-primary/20"
-              >
-                {paying ? (
-                  <span className="flex items-center gap-2">
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
-                    Elaborazione in corso...
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-2">
-                    <CreditCard className="h-4 w-4" />
-                    Paga €{currentService?.price.toFixed(2)}
-                  </span>
-                )}
+              {(() => {
+                const finalPrice = appliedDiscount
+                  ? currentService.price * (1 - appliedDiscount.percent / 100)
+                  : currentService.price;
+                return (
+                  <Button
+                    onClick={handleConfirmPayment}
+                    disabled={paying}
+                    className="h-12 w-full rounded-xl text-base shadow-lg shadow-primary/20"
+                  >
+                    {paying ? (
+                      <span className="flex items-center gap-2">
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                        Elaborazione in corso...
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        <CreditCard className="h-4 w-4" />
+                        Paga €{finalPrice.toFixed(2)}
+                      </span>
+                    )}
+                  </Button>
+                );
+              })()}
               </Button>
             </div>
           )}
