@@ -154,6 +154,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   user: null,
   services: mockServices,
   appointments: [],
+  invoices: [],
   providerServices: [
     {
       id: 'p1',
