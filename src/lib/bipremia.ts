@@ -85,11 +85,12 @@ const DEFAULT_CONFIG: PointsConfig = {
 };
 
 const DEFAULT_MISSIONS: Mission[] = [
-  { id: 'm1', title: 'Prima prenotazione', description: 'Completa il tuo primo appuntamento', reward: 15, target: 1, progress: 0, completed: false, active: true, icon: 'calendar' },
-  { id: 'm2', title: 'Abitudinario', description: 'Completa 3 appuntamenti consecutivi', reward: 20, target: 3, progress: 0, completed: false, active: true, icon: 'flame' },
-  { id: 'm3', title: 'Passaparola', description: 'Invita un amico che completa un\'azione', reward: 30, target: 1, progress: 0, completed: false, active: true, icon: 'users' },
-  { id: 'm4', title: 'Recensore', description: 'Lascia 3 recensioni', reward: 30, target: 3, progress: 0, completed: false, active: true, icon: 'star' },
-  { id: 'm5', title: 'Esploratore', description: 'Prenota 3 servizi diversi in 30 giorni', reward: 25, target: 3, progress: 0, completed: false, active: true, icon: 'compass' },
+  { id: 'm1', title: 'Prima prenotazione', description: 'Completa il tuo primo appuntamento', reward: 200, target: 1, progress: 0, completed: false, active: true, icon: 'calendar' },
+  { id: 'm2', title: 'Abitudinario', description: 'Completa 3 appuntamenti consecutivi', reward: 300, target: 3, progress: 0, completed: false, active: true, icon: 'flame' },
+  { id: 'm3', title: 'Passaparola', description: 'Invita un amico che completa un\'azione', reward: 300, target: 1, progress: 0, completed: false, active: true, icon: 'users' },
+  { id: 'm4', title: 'Recensore', description: 'Lascia 3 recensioni', reward: 300, target: 3, progress: 0, completed: false, active: true, icon: 'star' },
+  { id: 'm5', title: 'Esploratore', description: 'Prenota 3 servizi diversi in 30 giorni', reward: 500, target: 3, progress: 0, completed: false, active: true, icon: 'compass' },
+  { id: 'm6', title: 'Prenota in anticipo', description: 'Fai 2 prenotazioni con almeno 7 giorni di anticipo', reward: 200, target: 2, progress: 0, completed: false, active: true, icon: 'clock' },
 ];
 
 const DEFAULT_REWARDS: Reward[] = [
