@@ -429,7 +429,6 @@ const CitizenDashboard = () => {
                   </Button>
                 );
               })()}
-              </Button>
             </div>
           )}
         </DialogContent>
