@@ -33,7 +33,17 @@ export interface Reward {
   cost: number;
   tier: TierLevel;
   type: 'discount' | 'service' | 'prize';
+  discountPercent?: number;
   active: boolean;
+}
+
+export interface DiscountCode {
+  code: string;
+  rewardId: string;
+  rewardName: string;
+  discountPercent?: number;
+  used: boolean;
+  createdAt: string;
 }
 
 export interface ReferralInfo {
