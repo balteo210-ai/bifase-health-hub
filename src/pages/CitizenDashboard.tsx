@@ -18,7 +18,7 @@ import InvoicesSection from '@/components/dashboard/InvoicesSection';
 
 const CitizenDashboard = () => {
   const { user, services, appointments, invoices, bookAppointment, cancelAppointment, logout } = useAppStore();
-  const { balance, earnPurchase, earnAppointmentCompleted } = useBiPremiaStore();
+  const { balance, earnPurchase, earnAppointmentCompleted, useDiscountCode, discountCodes } = useBiPremiaStore();
   const tier = getTier(useBiPremiaStore.getState().totalEarned);
   const tierInfo = getTierInfo(tier);
   const navigate = useNavigate();
