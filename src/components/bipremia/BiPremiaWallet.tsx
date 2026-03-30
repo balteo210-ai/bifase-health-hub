@@ -271,6 +271,33 @@ const BiPremiaWallet = () => {
                   </motion.div>
                 );
               })}
+
+              {/* Active discount codes */}
+              {discountCodes.length > 0 && (
+                <div className="rounded-2xl border border-primary/20 bg-primary/[0.04] p-5 mt-4">
+                  <h4 className="font-display font-bold text-foreground mb-3 flex items-center gap-2">
+                    🎟️ I tuoi codici sconto
+                  </h4>
+                  <div className="space-y-2">
+                    {discountCodes.map((dc) => (
+                      <div key={dc.code} className={`flex items-center justify-between rounded-xl bg-card p-3 border border-border/60 ${dc.used ? 'opacity-50' : ''}`}>
+                        <div>
+                          <code className="font-mono font-bold text-foreground tracking-wider">{dc.code}</code>
+                          <p className="text-xs text-muted-foreground">{dc.rewardName}{dc.used ? ' · Utilizzato' : ''}</p>
+                        </div>
+                        {!dc.used && (
+                          <Button size="sm" variant="ghost" className="rounded-full" onClick={() => {
+                            navigator.clipboard.writeText(dc.code);
+                            toast.success('Codice copiato!');
+                          }}>
+                            <Copy className="h-3.5 w-3.5" />
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
