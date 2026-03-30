@@ -16,7 +16,7 @@ import { useGeolocation, getDistanceKm } from '@/hooks/use-geolocation';
 import InvoicesSection from '@/components/dashboard/InvoicesSection';
 
 const CitizenDashboard = () => {
-  const { user, services, appointments, bookAppointment, cancelAppointment, logout } = useAppStore();
+  const { user, services, appointments, invoices, bookAppointment, cancelAppointment, logout } = useAppStore();
   const navigate = useNavigate();
   const location = useGeolocation();
   const [search, setSearch] = useState('');
