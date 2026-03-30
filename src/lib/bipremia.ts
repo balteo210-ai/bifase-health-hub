@@ -61,6 +61,8 @@ export interface PointsConfig {
   appointmentCompleted: number;
   earlyBooking: number;
   noShowRecovery: number;
+  rebooking48h: number;
+  pathCompletion: number;
   streakBonus: number;
   streakTarget: number;
   expirationDays: number | null;
