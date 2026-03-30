@@ -63,12 +63,19 @@ const CitizenDashboard = () => {
     setPaying(true);
     setTimeout(() => {
       bookAppointment(selectedSlot.serviceId, selectedSlot.slotId, format(selectedDate, 'yyyy-MM-dd'));
+      // BiPremia: earn points for purchase + appointment
+      if (currentService) {
+        earnPurchase(currentService.price);
+        earnAppointmentCompleted();
+      }
       setPaying(false);
       setPaymentOpen(false);
       setSelectedSlot(null);
       setSelectedService(null);
       setSelectedDate(undefined);
-      toast.success('Pagamento completato! Appuntamento confermato.');
+      toast.success('Pagamento completato! Appuntamento confermato.', {
+        description: `+${Math.floor((currentService?.price || 0))} BiPoint guadagnati! 🪙`,
+      });
     }, 1500);
   };
 
