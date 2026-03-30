@@ -260,7 +260,30 @@ export const useAppStore = create<AppState>((set, get) => ({
     });
   },
 
-  addProviderService: (service) => {
+  completeAppointment: (appointmentId) => {
+    const { appointments, providerAppointments } = get();
+    set({
+      appointments: appointments.map((a) =>
+        a.id === appointmentId ? { ...a, status: 'completed' as const } : a
+      ),
+      providerAppointments: providerAppointments.map((a) =>
+        a.id === appointmentId ? { ...a, status: 'completed' as const } : a
+      ),
+    });
+  },
+
+  markNoShow: (appointmentId) => {
+    const { appointments, providerAppointments } = get();
+    set({
+      appointments: appointments.map((a) =>
+        a.id === appointmentId ? { ...a, status: 'no-show' as const } : a
+      ),
+      providerAppointments: providerAppointments.map((a) =>
+        a.id === appointmentId ? { ...a, status: 'no-show' as const } : a
+      ),
+    });
+  },
+
     const id = `ps-${Date.now()}`;
     set((state) => ({
       providerServices: [...state.providerServices, { ...service, id }],
