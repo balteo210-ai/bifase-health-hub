@@ -1,4 +1,4 @@
-// BiPremia Loyalty System - Store & Logic
+// BiPremia Loyalty System - Store & Logic v2
 import { create } from 'zustand';
 
 // ── Types ──────────────────────────────────────────────
