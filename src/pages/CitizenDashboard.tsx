@@ -30,6 +30,8 @@ const CitizenDashboard = () => {
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [paying, setPaying] = useState(false);
   const [activeTab, setActiveTab] = useState<'appointments' | 'invoices'>('appointments');
+  const [discountInput, setDiscountInput] = useState('');
+  const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; percent: number } | null>(null);
 
   const servicesWithDistance = useMemo(() => {
     if (!location.lat && !location.lng) return services.map((s) => ({ ...s, distance: null as number | null }));
