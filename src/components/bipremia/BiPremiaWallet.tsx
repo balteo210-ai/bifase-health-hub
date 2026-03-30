@@ -22,11 +22,12 @@ type WalletTab = 'overview' | 'history' | 'rewards' | 'missions' | 'referral';
 
 const BiPremiaWallet = () => {
   const {
-    balance, totalEarned, transactions, missions, rewards, referral,
+    balance, totalEarned, transactions, missions, rewards, discountCodes, referral,
     redeemReward, earnReferral, earnReview,
   } = useBiPremiaStore();
   const [tab, setTab] = useState<WalletTab>('overview');
   const [copied, setCopied] = useState(false);
+  const [lastCode, setLastCode] = useState<string | null>(null);
 
   const tier = getTier(totalEarned);
   const tierInfo = getTierInfo(tier);
