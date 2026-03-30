@@ -30,6 +30,8 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<CitizenDashboard />} />
           <Route path="/provider" element={<ProviderDashboard />} />
+          <Route path="/bipremia" element={<BiPremiaPage />} />
+          <Route path="/bipremia/admin" element={<BiPremiaAdmin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
