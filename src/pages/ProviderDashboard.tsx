@@ -16,7 +16,7 @@ import ReminderSettings from '@/components/dashboard/ReminderSettings';
 import NoShowRecovery from '@/components/dashboard/NoShowRecovery';
 
 const ProviderDashboard = () => {
-  const { user, providerServices, providerAppointments, addProviderService, removeProviderService, cancelAppointment, logout, subscribe } = useAppStore();
+  const { user, providerServices, providerAppointments, addProviderService, removeProviderService, cancelAppointment, completeAppointment, markNoShow, logout, subscribe } = useAppStore();
   const navigate = useNavigate();
   const [newName, setNewName] = useState('');
   const [newType, setNewType] = useState('');
