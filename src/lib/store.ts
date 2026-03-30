@@ -1,5 +1,6 @@
 // Mock data store for Bifase MVP
 import { create } from 'zustand';
+import { Invoice, createInvoice } from './invoices';
 
 export interface TimeSlot {
   id: string;
@@ -137,6 +138,7 @@ interface AppState {
   user: User | null;
   services: Service[];
   appointments: Appointment[];
+  invoices: Invoice[];
   providerServices: Service[];
   providerAppointments: Appointment[];
   login: (user: User) => void;
@@ -152,6 +154,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   user: null,
   services: mockServices,
   appointments: [],
+  invoices: [],
   providerServices: [
     {
       id: 'p1',
@@ -193,7 +196,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   })),
 
   bookAppointment: (serviceId, slotId, date) => {
-    const { services, appointments } = get();
+    const { services, appointments, invoices, user } = get();
     const service = services.find((s) => s.id === serviceId);
     const slot = service?.slots.find((s) => s.id === slotId);
     if (!service || !slot) return;
@@ -217,9 +220,16 @@ export const useAppStore = create<AppState>((set, get) => ({
       status: 'confirmed',
     };
 
+    const newInvoice = createInvoice(
+      newAppointment,
+      user?.name || 'Cliente',
+      user?.email || 'cliente@email.com'
+    );
+
     set({
       services: updatedServices,
       appointments: [...appointments, newAppointment],
+      invoices: [...invoices, newInvoice],
     });
   },
 
