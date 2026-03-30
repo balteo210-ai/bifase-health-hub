@@ -168,6 +168,7 @@ export const useBiPremiaStore = create<BiPremiaState>((set, get) => ({
   ],
   missions: DEFAULT_MISSIONS,
   rewards: DEFAULT_REWARDS,
+  discountCodes: [],
   config: DEFAULT_CONFIG,
   referral: { code: generateReferralCode(), totalInvited: 0, totalEarned: 0 },
   consecutiveAppointments: 0,
