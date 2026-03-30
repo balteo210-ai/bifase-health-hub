@@ -196,7 +196,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   })),
 
   bookAppointment: (serviceId, slotId, date) => {
-    const { services, appointments } = get();
+    const { services, appointments, invoices, user } = get();
     const service = services.find((s) => s.id === serviceId);
     const slot = service?.slots.find((s) => s.id === slotId);
     if (!service || !slot) return;
@@ -220,9 +220,16 @@ export const useAppStore = create<AppState>((set, get) => ({
       status: 'confirmed',
     };
 
+    const newInvoice = createInvoice(
+      newAppointment,
+      user?.name || 'Cliente',
+      user?.email || 'cliente@email.com'
+    );
+
     set({
       services: updatedServices,
       appointments: [...appointments, newAppointment],
+      invoices: [...invoices, newInvoice],
     });
   },
 
