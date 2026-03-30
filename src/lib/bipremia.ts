@@ -159,6 +159,8 @@ interface BiPremiaState {
   earnAppointmentCompleted: () => void;
   earnEarlyBooking: () => void;
   earnNoShowRecovery: () => void;
+  earnRebooking48h: () => void;
+  earnPathCompletion: () => void;
   earnReview: () => void;
   earnReferral: (isInviter: boolean) => void;
 
