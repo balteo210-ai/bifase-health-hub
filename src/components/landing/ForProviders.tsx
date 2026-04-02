@@ -58,19 +58,12 @@ const ForProviders = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <div className="flex flex-col items-center gap-3 sm:flex-row">
-              <Link to="/role-select">
-                <Button size="lg" className="h-12 gap-2 rounded-full px-10 text-base shadow-lg shadow-primary/25">
-                  Unisciti a Bifase
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/per-professionisti">
-                <Button variant="outline" size="lg" className="h-12 rounded-full px-10 text-base border-white/20 text-white hover:bg-white/10">
-                  Scopri di più
-                </Button>
-              </Link>
-            </div>
+            <Link to="/role-select">
+              <Button size="lg" className="h-12 gap-2 rounded-full px-10 text-base shadow-lg shadow-primary/25">
+                Unisciti a Bifase
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </div>
