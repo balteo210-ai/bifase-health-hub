@@ -44,7 +44,7 @@ export interface User {
   subscribed?: boolean;
 }
 
-const COMMISSION_RATE = 0.02;
+const COMMISSION_RATE = 0.05;
 
 // Mock services data
 const mockServices: Service[] = [
