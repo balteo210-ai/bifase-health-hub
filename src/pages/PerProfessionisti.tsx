@@ -175,7 +175,7 @@ const PerProfessionisti = () => {
                   <span className="text-lg text-muted-foreground">/anno</span>
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  + {COMMISSION_RATE * 100}% di commissione su ogni prestazione
+                  + {COMMISSION_RATE * 100}% trattenuto su ogni prestazione pagata dal cittadino
                 </p>
 
                 <div className="my-8 h-px bg-border" />
