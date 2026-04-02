@@ -59,7 +59,7 @@ const ProviderDashboard = () => {
                 <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> Dashboard analytics</div>
               </div>
               <div className="mt-4 rounded-xl bg-accent/50 px-3 py-2 text-xs text-accent-foreground">
-                Commissione del {COMMISSION_RATE * 100}% su ogni prestazione erogata
+                Commissione del {COMMISSION_RATE * 100}% trattenuta su ogni prestazione pagata dal cittadino
               </div>
             </div>
 
@@ -221,7 +221,7 @@ const ProviderDashboard = () => {
                     <div className="space-y-2">
                       <Label>Prezzo (€)</Label>
                       <Input type="number" min="0" step="0.01" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required placeholder="es. 80.00" className="h-11 rounded-xl" />
-                      <p className="text-xs text-muted-foreground">Commissione Bifase: {COMMISSION_RATE * 100}% su ogni prestazione</p>
+                      <p className="text-xs text-muted-foreground">Bifase trattiene il {COMMISSION_RATE * 100}% su ogni prestazione pagata dal cittadino</p>
                     </div>
                     <Button type="submit" className="h-11 w-full rounded-xl">Aggiungi servizio</Button>
                   </form>

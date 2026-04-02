@@ -31,11 +31,11 @@ const benefits = [
 ];
 
 const faqs = [
-  { q: 'Quanto costa l\'abbonamento?', a: `L'abbonamento annuale costa €${SUBSCRIPTION_PRICE}. È l'unico costo fisso. In più, si applica una commissione del ${COMMISSION_RATE * 100}% su ogni prestazione erogata tramite la piattaforma.` },
-  { q: `Come funziona la commissione del ${COMMISSION_RATE * 100}%?`, a: 'La commissione viene dedotta automaticamente dal tuo incasso per ogni prestazione completata. Il paziente non paga nulla in più — è interamente a carico del professionista.' },
+  { q: 'Quanto costa l\'abbonamento?', a: `L'abbonamento annuale costa €${SUBSCRIPTION_PRICE}. È l'unico costo fisso. In più, Bifase trattiene una commissione del ${COMMISSION_RATE * 100}% su ogni prestazione pagata dal cittadino.` },
+  { q: `Come funziona la commissione del ${COMMISSION_RATE * 100}%?`, a: `Quando un cittadino paga una prestazione, Bifase trattiene il ${COMMISSION_RATE * 100}% dall'importo. Il professionista riceve il restante ${100 - COMMISSION_RATE * 100}%. È un meccanismo trasparente applicato su ogni singola prestazione.` },
   { q: 'Posso cancellare l\'abbonamento?', a: 'Sì, puoi cancellare in qualsiasi momento. L\'accesso resta attivo fino alla fine del periodo già pagato.' },
   { q: 'Che tipi di professionisti possono iscriversi?', a: 'Tutti i professionisti sanitari: infermieri, nutrizionisti, farmacie, fisioterapisti, oculisti, psicologi, dentisti e molti altri.' },
-  { q: 'Come ricevo i pagamenti?', a: 'I pagamenti vengono elaborati attraverso la piattaforma e accreditati direttamente sul tuo conto, al netto della commissione Bifase.' },
+  { q: 'Come ricevo i pagamenti?', a: `I pagamenti dei cittadini vengono elaborati dalla piattaforma. Bifase trattiene il ${COMMISSION_RATE * 100}% di commissione e ti accredita il resto direttamente sul tuo conto.` },
   { q: 'Il recupero degli slot è automatico?', a: 'Sì. Quando un paziente cancella, lo slot viene immediatamente proposto ai pazienti in lista d\'attesa nella tua zona, massimizzando l\'occupazione.' },
 ];
 
@@ -175,7 +175,7 @@ const PerProfessionisti = () => {
                   <span className="text-lg text-muted-foreground">/anno</span>
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  + {COMMISSION_RATE * 100}% di commissione su ogni prestazione
+                  + {COMMISSION_RATE * 100}% trattenuto su ogni prestazione pagata dal cittadino
                 </p>
 
                 <div className="my-8 h-px bg-border" />
