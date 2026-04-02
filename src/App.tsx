@@ -33,6 +33,7 @@ const App = () => (
           <Route path="/provider" element={<ProviderDashboard />} />
           <Route path="/bipremia" element={<BiPremiaPage />} />
           <Route path="/bipremia/admin" element={<BiPremiaAdmin />} />
+          <Route path="/per-professionisti" element={<PerProfessionisti />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
