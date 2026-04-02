@@ -103,10 +103,11 @@ const ProviderDashboard = () => {
   }
 
   const confirmedAppointments = providerAppointments.filter((a) => a.status === 'confirmed');
+  const completedAppointments = providerAppointments.filter((a) => a.status === 'completed');
   const totalSlots = providerServices.reduce((acc, s) => acc + s.slots.length, 0);
   const availableSlots = providerServices.reduce((acc, s) => acc + s.slots.filter((sl) => sl.available).length, 0);
-  const totalRevenue = providerAppointments.filter((a) => a.status === 'confirmed').reduce((acc, a) => acc + a.price, 0);
-  const totalCommission = providerAppointments.filter((a) => a.status === 'confirmed').reduce((acc, a) => acc + a.commission, 0);
+  const totalRevenue = completedAppointments.reduce((acc, a) => acc + a.price, 0);
+  const totalCommission = completedAppointments.reduce((acc, a) => acc + a.commission, 0);
 
   const handleAddService = (e: React.FormEvent) => {
     e.preventDefault();
