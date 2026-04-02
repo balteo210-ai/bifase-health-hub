@@ -59,7 +59,7 @@ const ProviderDashboard = () => {
                 <div className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> Dashboard analytics</div>
               </div>
               <div className="mt-4 rounded-xl bg-accent/50 px-3 py-2 text-xs text-accent-foreground">
-                Commissione del {COMMISSION_RATE * 100}% su ogni prestazione erogata
+                Commissione del {COMMISSION_RATE * 100}% trattenuta su ogni prestazione pagata dal cittadino
               </div>
             </div>
 
