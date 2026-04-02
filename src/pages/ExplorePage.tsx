@@ -88,7 +88,7 @@ const providers: Provider[] = [
   },
 ];
 
-const categories = ['Tutti', 'Medicina Generale', 'Odontoiatria', 'Farmacia', 'Fisioterapia', 'Oculistica', 'Analisi Cliniche', 'Dermatologia', 'Cardiologia', 'Pediatria'];
+const categories = ['Tutti', 'Screening & Test', 'Diagnostica Rapida', 'Telemedicina', 'Infermieristica', 'Cronicità', 'Nutrizione', 'Vaccini'];
 
 const ExplorePage = () => {
   const [search, setSearch] = useState('');
