@@ -32,7 +32,7 @@ const benefits = [
 
 const faqs = [
   { q: 'Quanto costa l\'abbonamento?', a: `L'abbonamento annuale costa €${SUBSCRIPTION_PRICE}. È l'unico costo fisso. In più, si applica una commissione del ${COMMISSION_RATE * 100}% su ogni prestazione erogata tramite la piattaforma.` },
-  { q: 'Come funziona la commissione del 2%?', a: 'La commissione viene dedotta automaticamente dal tuo incasso per ogni prestazione completata. Il paziente non paga nulla in più — è interamente a carico del professionista.' },
+  { q: `Come funziona la commissione del ${COMMISSION_RATE * 100}%?`, a: 'La commissione viene dedotta automaticamente dal tuo incasso per ogni prestazione completata. Il paziente non paga nulla in più — è interamente a carico del professionista.' },
   { q: 'Posso cancellare l\'abbonamento?', a: 'Sì, puoi cancellare in qualsiasi momento. L\'accesso resta attivo fino alla fine del periodo già pagato.' },
   { q: 'Che tipi di professionisti possono iscriversi?', a: 'Tutti i professionisti sanitari: infermieri, nutrizionisti, farmacie, fisioterapisti, oculisti, psicologi, dentisti e molti altri.' },
   { q: 'Come ricevo i pagamenti?', a: 'I pagamenti vengono elaborati attraverso la piattaforma e accreditati direttamente sul tuo conto, al netto della commissione Bifase.' },
