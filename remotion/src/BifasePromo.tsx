@@ -15,42 +15,42 @@ export const BifasePromo = () => {
   return (
     <AbsoluteFill>
       <TransitionSeries>
-        <TransitionSeries.Sequence durationInFrames={160}>
+        <TransitionSeries.Sequence durationInFrames={190}>
           <Scene1_Intro />
         </TransitionSeries.Sequence>
         <TransitionSeries.Transition
           presentation={fade()}
           timing={springTiming({ config: { damping: 200 }, durationInFrames: T })}
         />
-        <TransitionSeries.Sequence durationInFrames={260}>
+        <TransitionSeries.Sequence durationInFrames={340}>
           <Scene2_Problem />
         </TransitionSeries.Sequence>
         <TransitionSeries.Transition
           presentation={slide({ direction: "from-right" })}
           timing={springTiming({ config: { damping: 200 }, durationInFrames: T })}
         />
-        <TransitionSeries.Sequence durationInFrames={300}>
+        <TransitionSeries.Sequence durationInFrames={460}>
           <Scene3_CitizenServices />
         </TransitionSeries.Sequence>
         <TransitionSeries.Transition
           presentation={fade()}
           timing={springTiming({ config: { damping: 200 }, durationInFrames: T })}
         />
-        <TransitionSeries.Sequence durationInFrames={300}>
+        <TransitionSeries.Sequence durationInFrames={390}>
           <Scene4_ProServices />
         </TransitionSeries.Sequence>
         <TransitionSeries.Transition
           presentation={slide({ direction: "from-left" })}
           timing={springTiming({ config: { damping: 200 }, durationInFrames: T })}
         />
-        <TransitionSeries.Sequence durationInFrames={210}>
+        <TransitionSeries.Sequence durationInFrames={310}>
           <Scene5_Stats />
         </TransitionSeries.Sequence>
         <TransitionSeries.Transition
           presentation={fade()}
           timing={springTiming({ config: { damping: 200 }, durationInFrames: T })}
         />
-        <TransitionSeries.Sequence durationInFrames={240}>
+        <TransitionSeries.Sequence durationInFrames={200}>
           <Scene6_CTA />
         </TransitionSeries.Sequence>
       </TransitionSeries>
