@@ -13,6 +13,7 @@ import ProviderDashboard from "./pages/ProviderDashboard";
 import ExplorePage from "./pages/ExplorePage";
 import BiPremiaPage from "./pages/BiPremiaPage";
 import BiPremiaAdmin from "./pages/BiPremiaAdmin";
+import PerProfessionisti from "./pages/PerProfessionisti";
 
 const queryClient = new QueryClient();
 
