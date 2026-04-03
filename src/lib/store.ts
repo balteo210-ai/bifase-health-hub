@@ -280,6 +280,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       price: service.price,
       commission: service.price * COMMISSION_RATE,
       status: 'confirmed',
+      serviceType: service.type,
     };
 
     const newInvoice = createInvoice(
