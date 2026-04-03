@@ -280,14 +280,47 @@ const ProviderDashboard = () => {
           <NoShowRecovery />
         </div>
 
-        {/* BiPremia Admin Link */}
+        {/* BiPremia Stats (read-only) */}
         <div className="mt-8">
-          <Link to="/bipremia/admin">
-            <Button variant="outline" className="w-full rounded-2xl h-14 gap-2 text-base">
-              <Coins className="h-5 w-5 text-primary" />
-              Gestisci BiPremia — Programma Fedeltà
-            </Button>
-          </Link>
+          <h2 className="mb-5 font-display text-xl font-bold text-foreground">BiPremia — Statistiche</h2>
+          <div className="rounded-2xl border border-border/60 bg-card p-6 card-elevated">
+            <div className="grid gap-6 sm:grid-cols-3">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-500/5">
+                  <Coins className="h-6 w-6 text-amber-500" />
+                </div>
+                <div>
+                  <p className="font-display text-2xl font-bold text-foreground">
+                    {(completedAppointments.length * 10 * Math.round(completedAppointments.reduce((a, b) => a + b.price, 0) / Math.max(completedAppointments.length, 1))).toLocaleString()}
+                  </p>
+                  <p className="text-sm text-muted-foreground">BiPoint generati</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5">
+                  <Users className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <p className="font-display text-2xl font-bold text-foreground">{completedAppointments.length}</p>
+                  <p className="text-sm text-muted-foreground">Prestazioni completate</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-success/10 to-success/5">
+                  <CheckCircle2 className="h-6 w-6 text-success" />
+                </div>
+                <div>
+                  <p className="font-display text-2xl font-bold text-foreground">
+                    {providerAppointments.length > 0 ? Math.round((completedAppointments.length / providerAppointments.length) * 100) : 0}%
+                  </p>
+                  <p className="text-sm text-muted-foreground">Tasso completamento</p>
+                </div>
+              </div>
+            </div>
+            <p className="mt-4 text-xs text-muted-foreground">
+              I BiPoint vengono assegnati automaticamente ai cittadini per ogni prestazione completata. Più prestazioni completi, più fidelizzi i tuoi pazienti.
+            </p>
+          </div>
         </div>
       </div>
     </div>
