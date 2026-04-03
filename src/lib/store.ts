@@ -129,6 +129,38 @@ const mockServices: Service[] = [
       { id: 's21', time: '17:00', available: false },
     ],
   },
+  {
+    id: '6',
+    name: 'Teleconsulto dermatologico',
+    providerName: 'DermaOnline Italia',
+    location: 'Online',
+    type: 'Telemedicina',
+    price: 35,
+    lat: 45.4642,
+    lng: 9.1900,
+    slots: [
+      { id: 's22', time: '09:00', available: true },
+      { id: 's23', time: '10:30', available: true },
+      { id: 's24', time: '14:00', available: true },
+      { id: 's25', time: '16:00', available: true },
+    ],
+  },
+  {
+    id: '7',
+    name: 'Consulto medico generico',
+    providerName: 'Dott. Marco Benedetti',
+    location: 'Online',
+    type: 'Telemedicina',
+    price: 40,
+    lat: 41.9028,
+    lng: 12.4964,
+    slots: [
+      { id: 's26', time: '08:30', available: true },
+      { id: 's27', time: '11:00', available: true },
+      { id: 's28', time: '15:00', available: false },
+      { id: 's29', time: '17:30', available: true },
+    ],
+  },
 ];
 
 interface AppState {
