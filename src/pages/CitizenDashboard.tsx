@@ -121,6 +121,10 @@ const CitizenDashboard = () => {
               <span>{balance}</span>
               <span className="text-xs">{tierInfo.icon}</span>
             </Link>
+            <Link to="/memocare" className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-accent-foreground hover:bg-accent/80 transition-colors">
+              <Heart className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">MemoCare</span>
+            </Link>
             <span className="text-sm text-muted-foreground">Ciao, <span className="font-medium text-foreground">{user.name}</span></span>
             <Button variant="ghost" size="sm" onClick={() => { logout(); navigate('/'); }} className="text-muted-foreground hover:text-foreground">
               <LogOut className="h-4 w-4" />
