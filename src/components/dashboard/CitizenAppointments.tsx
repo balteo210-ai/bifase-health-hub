@@ -172,4 +172,18 @@ const AppointmentCard = ({
   );
 };
 
+const TeleConsultoButton = ({ apt }: { apt: Appointment }) => {
+  const navigate = useNavigate();
+  return (
+    <Button
+      size="sm"
+      className="gap-1 rounded-xl text-xs h-8 bg-emerald-600 hover:bg-emerald-500 text-white"
+      onClick={() => navigate(`/teleconsulto?service=${encodeURIComponent(apt.serviceName)}&provider=${encodeURIComponent(apt.providerName)}`)}
+    >
+      <Video className="mr-1 h-3 w-3" />
+      Videocall
+    </Button>
+  );
+};
+
 export default CitizenAppointments;
