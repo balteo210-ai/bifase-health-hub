@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar } from '@/components/ui/calendar';
 import { useAppStore } from '@/lib/store';
 import { useBiPremiaStore, getTier, getTierInfo } from '@/lib/bipremia';
-import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck, Navigation, Loader2, FileText, Coins, Tag, Heart, Video } from 'lucide-react';
+import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck, Navigation, Loader2, FileText, Coins, Tag, Heart } from 'lucide-react';
 import BifaseLogo from '@/components/BifaseLogo';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
