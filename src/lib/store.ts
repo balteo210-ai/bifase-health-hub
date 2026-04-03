@@ -31,6 +31,7 @@ export interface Appointment {
   price: number;
   commission: number;
   status: 'confirmed' | 'cancelled' | 'completed' | 'no-show';
+  serviceType?: string;
   patientName?: string;
   patientPhone?: string;
 }
