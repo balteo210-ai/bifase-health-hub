@@ -243,6 +243,12 @@ const CitizenDashboard = () => {
                                 </Button>
                               ))}
                             </div>
+                            {service.slots.every((s) => !s.available) && (
+                              <div className="mt-3 flex items-center gap-2 rounded-xl bg-amber-50 p-3 text-sm">
+                                <span className="text-muted-foreground">Nessuno slot disponibile per questa data.</span>
+                                <WaitlistButton serviceName={service.name} providerName={service.providerName} serviceId={service.id} />
+                              </div>
+                            )}
                           </motion.div>
                         )}
                       </motion.div>
