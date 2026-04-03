@@ -141,6 +141,9 @@ const AppointmentCard = ({
 
           {showCancel && apt.status === 'confirmed' && (
             <div className="flex flex-col gap-1.5 shrink-0">
+              {apt.serviceType === 'Telemedicina' && (
+                <TeleConsultoButton apt={apt} />
+              )}
               <Button
                 variant="ghost"
                 size="sm"
