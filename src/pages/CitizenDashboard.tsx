@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar } from '@/components/ui/calendar';
 import { useAppStore } from '@/lib/store';
 import { useBiPremiaStore, getTier, getTierInfo } from '@/lib/bipremia';
-import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck, Navigation, Loader2, FileText, Coins, Tag } from 'lucide-react';
+import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck, Navigation, Loader2, FileText, Coins, Tag, Heart, Video } from 'lucide-react';
 import BifaseLogo from '@/components/BifaseLogo';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,6 +16,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { useGeolocation, getDistanceKm } from '@/hooks/use-geolocation';
 import InvoicesSection from '@/components/dashboard/InvoicesSection';
 import CitizenAppointments from '@/components/dashboard/CitizenAppointments';
+import WaitlistButton from '@/components/dashboard/WaitlistButton';
 
 const CitizenDashboard = () => {
   const { user, services, appointments, invoices, bookAppointment, cancelAppointment, logout } = useAppStore();
