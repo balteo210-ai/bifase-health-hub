@@ -228,11 +228,23 @@ const ExplorePage = () => {
                     <span className="text-muted-foreground">{provider.nextSlot}</span>
                   )}
                 </div>
-                <Link to="/role-select">
-                  <Button size="sm" className="gap-1">
-                    Prenota <ArrowRight className="h-3 w-3" />
-                  </Button>
-                </Link>
+                <div className="flex items-center gap-2">
+                  {provider.category === 'Telemedicina' && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="gap-1 border-emerald-500/30 text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700"
+                      onClick={() => navigate(`/teleconsulto?service=${encodeURIComponent(provider.services[0])}&provider=${encodeURIComponent(provider.name)}`)}
+                    >
+                      <Video className="h-3 w-3" /> Teleconsulto
+                    </Button>
+                  )}
+                  <Link to="/role-select">
+                    <Button size="sm" className="gap-1">
+                      Prenota <ArrowRight className="h-3 w-3" />
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
