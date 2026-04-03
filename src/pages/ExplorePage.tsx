@@ -94,7 +94,6 @@ const ExplorePage = () => {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Tutti');
   const location = useGeolocation();
-  const navigate = useNavigate();
 
   const providersWithDistance = useMemo(() => {
     if (!location.lat && !location.lng) return providers.map((p) => ({ ...p, distance: null as number | null }));
