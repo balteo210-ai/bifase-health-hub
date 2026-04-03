@@ -12,7 +12,7 @@ import CitizenDashboard from "./pages/CitizenDashboard";
 import ProviderDashboard from "./pages/ProviderDashboard";
 import ExplorePage from "./pages/ExplorePage";
 import BiPremiaPage from "./pages/BiPremiaPage";
-import BiPremiaAdmin from "./pages/BiPremiaAdmin";
+
 import PerProfessionisti from "./pages/PerProfessionisti";
 import TeleConsultoPage from "./pages/TeleConsultoPage";
 import MemoCarePage from "./pages/MemoCarePage";
