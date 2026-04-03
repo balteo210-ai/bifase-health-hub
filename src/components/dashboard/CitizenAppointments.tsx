@@ -1,9 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format, isAfter, isBefore, isToday, parseISO } from 'date-fns';
 import { it } from 'date-fns/locale';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, X, Clock, MapPin, Phone, AlertTriangle, CalendarDays } from 'lucide-react';
+import { CheckCircle2, X, Clock, MapPin, Phone, AlertTriangle, CalendarDays, Video } from 'lucide-react';
 import { Appointment } from '@/lib/store';
 
 interface CitizenAppointmentsProps {
