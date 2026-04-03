@@ -1,10 +1,10 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import BifaseLogo from '@/components/BifaseLogo';
-import { Search, MapPin, Star, Clock, Phone, ArrowRight, Navigation, Loader2 } from 'lucide-react';
+import { Search, MapPin, Star, Clock, Phone, ArrowRight, Navigation, Loader2, Video } from 'lucide-react';
 import { useGeolocation, getDistanceKm, CITY_COORDS } from '@/hooks/use-geolocation';
 
 interface Provider {
