@@ -14,6 +14,8 @@ import ExplorePage from "./pages/ExplorePage";
 import BiPremiaPage from "./pages/BiPremiaPage";
 import BiPremiaAdmin from "./pages/BiPremiaAdmin";
 import PerProfessionisti from "./pages/PerProfessionisti";
+import TeleConsultoPage from "./pages/TeleConsultoPage";
+import MemoCarePage from "./pages/MemoCarePage";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +36,8 @@ const App = () => (
           <Route path="/bipremia" element={<BiPremiaPage />} />
           <Route path="/bipremia/admin" element={<BiPremiaAdmin />} />
           <Route path="/per-professionisti" element={<PerProfessionisti />} />
+          <Route path="/teleconsulto" element={<TeleConsultoPage />} />
+          <Route path="/memocare" element={<MemoCarePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

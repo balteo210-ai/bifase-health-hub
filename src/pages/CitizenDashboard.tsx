@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar } from '@/components/ui/calendar';
 import { useAppStore } from '@/lib/store';
 import { useBiPremiaStore, getTier, getTierInfo } from '@/lib/bipremia';
-import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck, Navigation, Loader2, FileText, Coins, Tag } from 'lucide-react';
+import { Search, MapPin, Clock, LogOut, X, CheckCircle2, CreditCard, ShieldCheck, Navigation, Loader2, FileText, Coins, Tag, Heart, Video } from 'lucide-react';
 import BifaseLogo from '@/components/BifaseLogo';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,6 +16,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { useGeolocation, getDistanceKm } from '@/hooks/use-geolocation';
 import InvoicesSection from '@/components/dashboard/InvoicesSection';
 import CitizenAppointments from '@/components/dashboard/CitizenAppointments';
+import WaitlistButton from '@/components/dashboard/WaitlistButton';
 
 const CitizenDashboard = () => {
   const { user, services, appointments, invoices, bookAppointment, cancelAppointment, logout } = useAppStore();
@@ -120,6 +121,10 @@ const CitizenDashboard = () => {
               <span>{balance}</span>
               <span className="text-xs">{tierInfo.icon}</span>
             </Link>
+            <Link to="/memocare" className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-sm font-medium text-accent-foreground hover:bg-accent/80 transition-colors">
+              <Heart className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">MemoCare</span>
+            </Link>
             <span className="text-sm text-muted-foreground">Ciao, <span className="font-medium text-foreground">{user.name}</span></span>
             <Button variant="ghost" size="sm" onClick={() => { logout(); navigate('/'); }} className="text-muted-foreground hover:text-foreground">
               <LogOut className="h-4 w-4" />
@@ -186,6 +191,13 @@ const CitizenDashboard = () => {
                           </Badge>
                         )}
                         <Badge variant="secondary" className="rounded-full text-xs">{service.type}</Badge>
+                        {service.type === 'Telemedicina' && (
+                          <Link to={`/teleconsulto?service=${encodeURIComponent(service.name)}&provider=${encodeURIComponent(service.providerName)}`}>
+                            <Badge className="gap-1 rounded-full bg-emerald-500/10 text-emerald-600 border-emerald-500/20 cursor-pointer hover:bg-emerald-500/20 text-xs">
+                              <Video className="h-3 w-3" /> Teleconsulto
+                            </Badge>
+                          </Link>
+                        )}
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-2">
@@ -231,6 +243,12 @@ const CitizenDashboard = () => {
                                 </Button>
                               ))}
                             </div>
+                            {service.slots.every((s) => !s.available) && (
+                              <div className="mt-3 flex items-center gap-2 rounded-xl bg-amber-50 p-3 text-sm">
+                                <span className="text-muted-foreground">Nessuno slot disponibile per questa data.</span>
+                                <WaitlistButton serviceName={service.name} providerName={service.providerName} serviceId={service.id} />
+                              </div>
+                            )}
                           </motion.div>
                         )}
                       </motion.div>
