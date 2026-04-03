@@ -31,6 +31,7 @@ export interface Appointment {
   price: number;
   commission: number;
   status: 'confirmed' | 'cancelled' | 'completed' | 'no-show';
+  serviceType?: string;
   patientName?: string;
   patientPhone?: string;
 }
@@ -279,6 +280,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       price: service.price,
       commission: service.price * COMMISSION_RATE,
       status: 'confirmed',
+      serviceType: service.type,
     };
 
     const newInvoice = createInvoice(

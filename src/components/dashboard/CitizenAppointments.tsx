@@ -1,9 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format, isAfter, isBefore, isToday, parseISO } from 'date-fns';
 import { it } from 'date-fns/locale';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, X, Clock, MapPin, Phone, AlertTriangle, CalendarDays } from 'lucide-react';
+import { CheckCircle2, X, Clock, MapPin, Phone, AlertTriangle, CalendarDays, Video } from 'lucide-react';
 import { Appointment } from '@/lib/store';
 
 interface CitizenAppointmentsProps {
@@ -140,6 +141,9 @@ const AppointmentCard = ({
 
           {showCancel && apt.status === 'confirmed' && (
             <div className="flex flex-col gap-1.5 shrink-0">
+              {apt.serviceType === 'Telemedicina' && (
+                <TeleConsultoButton apt={apt} />
+              )}
               <Button
                 variant="ghost"
                 size="sm"
@@ -165,6 +169,20 @@ const AppointmentCard = ({
         </div>
       </div>
     </motion.div>
+  );
+};
+
+const TeleConsultoButton = ({ apt }: { apt: Appointment }) => {
+  const navigate = useNavigate();
+  return (
+    <Button
+      size="sm"
+      className="gap-1 rounded-xl text-xs h-8 bg-emerald-600 hover:bg-emerald-500 text-white"
+      onClick={() => navigate(`/teleconsulto?service=${encodeURIComponent(apt.serviceName)}&provider=${encodeURIComponent(apt.providerName)}`)}
+    >
+      <Video className="mr-1 h-3 w-3" />
+      Videocall
+    </Button>
   );
 };
 
