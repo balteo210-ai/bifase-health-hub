@@ -215,6 +215,11 @@ const ProviderDashboard = () => {
                           <SelectItem value="Farmacia">Farmacia</SelectItem>
                           <SelectItem value="Fisioterapia">Fisioterapia</SelectItem>
                           <SelectItem value="Oculistica">Oculistica</SelectItem>
+                          <SelectItem value="Telemedicina">Telemedicina / Teleconsulto</SelectItem>
+                          <SelectItem value="Screening & Test">Screening & Test</SelectItem>
+                          <SelectItem value="Diagnostica Rapida">Diagnostica Rapida</SelectItem>
+                          <SelectItem value="Infermieristica">Infermieristica</SelectItem>
+                          <SelectItem value="Nutrizione">Nutrizione</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
