@@ -8,7 +8,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import {
   CheckCircle2, X, Clock, Phone, AlertTriangle, CalendarDays,
-  User, LayoutList, CalendarRange, Ban
+  User, LayoutList, CalendarRange, Ban, RotateCcw
 } from 'lucide-react';
 import { Appointment } from '@/lib/store';
 import { toast } from 'sonner';
@@ -58,6 +58,12 @@ const ProviderAppointments = ({ appointments, onCancel, onComplete, onNoShow }: 
     } else {
       toast.info('Numero non disponibile');
     }
+  };
+
+  const handleRefund = (id: string, patientName?: string) => {
+    toast.success(`Rimborso autorizzato per ${patientName || 'il paziente'}`, {
+      description: 'Il rimborso verrà elaborato entro 5-7 giorni lavorativi',
+    });
   };
 
   if (appointments.length === 0) {
@@ -165,6 +171,12 @@ const ProviderAppointments = ({ appointments, onCancel, onComplete, onNoShow }: 
                                   </Button>
                                 </div>
                               )}
+                              {(apt.status === 'cancelled' || apt.status === 'no-show') && (
+                                <Button size="sm" variant="outline" className="shrink-0 rounded-full text-xs gap-1 border-primary/40 text-primary hover:bg-primary/10" onClick={() => handleRefund(apt.id, apt.patientName)} title="Autorizza rimborso">
+                                  <RotateCcw className="h-3.5 w-3.5" />
+                                  Rimborso
+                                </Button>
+                              )}
                             </div>
                           </motion.div>
                         );
@@ -243,6 +255,12 @@ const ProviderAppointments = ({ appointments, onCancel, onComplete, onNoShow }: 
                                 <Ban className="h-3.5 w-3.5" />
                               </Button>
                             </div>
+                          )}
+                          {(apt.status === 'cancelled' || apt.status === 'no-show') && (
+                            <Button size="sm" variant="outline" className="rounded-full text-xs gap-1 border-primary/40 text-primary hover:bg-primary/10" onClick={() => handleRefund(apt.id, apt.patientName)} title="Autorizza rimborso">
+                              <RotateCcw className="h-3 w-3" />
+                              Rimborso
+                            </Button>
                           )}
                         </TableCell>
                       </TableRow>
