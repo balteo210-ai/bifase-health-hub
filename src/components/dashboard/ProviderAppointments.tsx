@@ -8,7 +8,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import {
   CheckCircle2, X, Clock, Phone, AlertTriangle, CalendarDays,
-  User, LayoutList, CalendarRange, Ban
+  User, LayoutList, CalendarRange, Ban, RotateCcw
 } from 'lucide-react';
 import { Appointment } from '@/lib/store';
 import { toast } from 'sonner';

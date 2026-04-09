@@ -376,6 +376,23 @@ const CitizenDashboard = () => {
                 )}
               </div>
 
+              {/* Politiche di cancellazione e rimborso */}
+              <div className="rounded-2xl border border-border/60 p-4 space-y-2">
+                <p className="text-xs font-semibold text-foreground mb-2">Politica di cancellazione e rimborso</p>
+                <div className="flex items-start gap-2">
+                  <Badge variant="outline" className="shrink-0 rounded-full text-[10px] border-success/40 text-success bg-success/5">✓ Rimborso completo</Badge>
+                  <span className="text-xs text-muted-foreground">se cancelli entro <span className="font-medium text-foreground">24 ore</span> prima</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Badge variant="outline" className="shrink-0 rounded-full text-[10px] border-amber-500/40 text-amber-600 bg-amber-500/5">~ Rimborso parziale</Badge>
+                  <span className="text-xs text-muted-foreground">se cancelli entro <span className="font-medium text-foreground">12 ore</span> prima</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Badge variant="outline" className="shrink-0 rounded-full text-[10px] border-destructive/40 text-destructive bg-destructive/5">✗ Nessun rimborso</Badge>
+                  <span className="text-xs text-muted-foreground">in caso di mancata presentazione o cancellazione tardiva</span>
+                </div>
+              </div>
+
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <ShieldCheck className="h-4 w-4 text-success" />
                 Pagamento sicuro e protetto
