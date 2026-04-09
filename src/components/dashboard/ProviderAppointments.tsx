@@ -60,6 +60,12 @@ const ProviderAppointments = ({ appointments, onCancel, onComplete, onNoShow }: 
     }
   };
 
+  const handleRefund = (id: string, patientName?: string) => {
+    toast.success(`Rimborso autorizzato per ${patientName || 'il paziente'}`, {
+      description: 'Il rimborso verrà elaborato entro 5-7 giorni lavorativi',
+    });
+  };
+
   if (appointments.length === 0) {
     return (
       <div className="rounded-2xl border border-border/60 bg-card p-8 text-center shadow-sm">
