@@ -256,6 +256,12 @@ const ProviderAppointments = ({ appointments, onCancel, onComplete, onNoShow }: 
                               </Button>
                             </div>
                           )}
+                          {(apt.status === 'cancelled' || apt.status === 'no-show') && (
+                            <Button size="sm" variant="outline" className="rounded-full text-xs gap-1 border-primary/40 text-primary hover:bg-primary/10" onClick={() => handleRefund(apt.id, apt.patientName)} title="Autorizza rimborso">
+                              <RotateCcw className="h-3 w-3" />
+                              Rimborso
+                            </Button>
+                          )}
                         </TableCell>
                       </TableRow>
                     );
