@@ -17,7 +17,7 @@ const Navbar = () => {
             <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">Accedi</Button>
           </Link>
           <Link to="/role-select">
-            <Button size="sm" className="rounded-full px-5 shadow-sm">Inizia ora</Button>
+            <Button size="sm" className="rounded-full px-5 shadow-sm">Avvia demo</Button>
           </Link>
         </div>
       </div>

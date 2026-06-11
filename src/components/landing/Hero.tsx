@@ -20,12 +20,11 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.06] px-4 py-2 text-sm font-medium text-primary">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-              </span>
-              Ora disponibile nella tua città
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.08] px-4 py-2 text-xs font-semibold uppercase tracking-wide text-primary">
+              🎓 MVP Capstone Project — Rome Business School
+            </div>
+            <div className="mb-8 ml-2 inline-flex items-center gap-2 rounded-full border border-border bg-background/60 px-4 py-2 text-sm font-medium text-muted-foreground">
+              Demo MVP — Executive Master in Digital Marketing
             </div>
           </motion.div>
 
@@ -45,8 +44,8 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Bifase collega cittadini e operatori sanitari in tempo reale.
-            Cerca, confronta e prenota — tutto in un unico posto.
+            Bifase è un prototipo dimostrativo che simula il customer journey di cittadini e
+            operatori sanitari. Cerca, confronta e simula una prenotazione — tutto in un'unica demo.
           </motion.p>
 
           <motion.div
@@ -58,12 +57,12 @@ const Hero = () => {
             <Link to="/esplora">
               <Button size="lg" className="h-12 gap-2 rounded-full px-8 text-base shadow-lg shadow-primary/25 transition-all hover:shadow-xl hover:shadow-primary/30">
                 <Search className="h-4 w-4" />
-                Trova un servizio
+                Esplora la demo
               </Button>
             </Link>
             <Link to="/role-select">
               <Button size="lg" variant="outline" className="h-12 gap-2 rounded-full px-8 text-base">
-                Unisciti come operatore
+                Simula profilo operatore
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
@@ -78,15 +77,15 @@ const Hero = () => {
           >
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-primary" />
-              <span>Dati protetti</span>
+              <span>Prototipo formativo</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-primary" />
-              <span>Disponibilità in tempo reale</span>
+              <span>Flusso demo di ricerca e prenotazione</span>
             </div>
             <div className="flex items-center gap-2">
               <Star className="h-4 w-4 text-primary" />
-              <span>Piattaforma demo per cittadini e operatori</span>
+              <span>Capstone Project — Rome Business School</span>
             </div>
           </motion.div>
         </div>
