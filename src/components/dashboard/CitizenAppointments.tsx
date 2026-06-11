@@ -158,7 +158,7 @@ const AppointmentCard = ({
                   variant="ghost"
                   size="sm"
                   className="text-muted-foreground hover:text-foreground rounded-xl text-xs h-8"
-                  onClick={() => window.open(`tel:+39000000000`)}
+                  onClick={() => window.open(`tel:0000000000`)}
                 >
                   <Phone className="mr-1 h-3 w-3" />
                   Contatta
