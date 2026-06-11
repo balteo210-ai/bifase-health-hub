@@ -96,7 +96,7 @@ export function generateInvoicePDF(invoice: Invoice): void {
     </tbody>
   </table>
   <div class="footer">
-    <p>Bifase S.r.l. — P.IVA 00000000000 — bifase@pec.it</p>
+    <p>Bifase (MVP Demo) — P.IVA 00000000000 — info@demo.it</p>
     <p style="margin-top:4px">Documento generato automaticamente</p>
   </div>
 </body>

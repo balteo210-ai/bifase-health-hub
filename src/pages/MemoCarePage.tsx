@@ -39,22 +39,22 @@ interface HealthEvent {
 const mockDocuments: HealthDocument[] = [
   { id: 'd1', name: 'Esami del sangue - Emocromo completo', type: 'referto', category: 'Analisi', date: '2026-03-15', provider: 'Centro Diagnostico Rapido', size: '245 KB' },
   { id: 'd2', name: 'Elettrocardiogramma (ECG)', type: 'referto', category: 'Cardiologia', date: '2026-02-28', provider: 'CardioTelemedicina Italia', size: '1.2 MB', notes: 'Risultato nella norma' },
-  { id: 'd3', name: 'Prescrizione - Omeprazolo 20mg', type: 'prescrizione', category: 'Farmaci', date: '2026-02-10', provider: 'Dott. Marco Benedetti', size: '120 KB' },
+  { id: 'd3', name: 'Prescrizione - Omeprazolo 20mg', type: 'prescrizione', category: 'Farmaci', date: '2026-02-10', provider: 'Studio Medico Demo', size: '120 KB' },
   { id: 'd4', name: 'Certificato medico sportivo', type: 'certificato', category: 'Certificati', date: '2026-01-20', provider: 'Ambulatorio Sport & Salute', size: '340 KB' },
-  { id: 'd5', name: 'RX Torace', type: 'immagine', category: 'Radiologia', date: '2025-12-05', provider: 'Ospedale San Raffaele', size: '4.5 MB', notes: 'Nessuna anomalia rilevata' },
-  { id: 'd6', name: 'Test allergologico', type: 'referto', category: 'Allergologia', date: '2025-11-12', provider: 'Centro Allergologico Milano', size: '890 KB' },
+  { id: 'd5', name: 'RX Torace', type: 'immagine', category: 'Radiologia', date: '2025-12-05', provider: 'Ospedale Demo', size: '4.5 MB', notes: 'Nessuna anomalia rilevata' },
+  { id: 'd6', name: 'Test allergologico', type: 'referto', category: 'Allergologia', date: '2025-11-12', provider: 'Centro Allergologico Demo', size: '890 KB' },
   { id: 'd7', name: 'Piano alimentare personalizzato', type: 'altro', category: 'Nutrizione', date: '2026-03-01', provider: 'NutriVita Studio', size: '560 KB' },
 ];
 
 const mockHistory: HealthEvent[] = [
   { id: 'h1', type: 'appointment', title: 'Visita cardiologica', provider: 'CardioTelemedicina Italia', date: '2026-03-20', result: 'Nella norma', icon: '❤️' },
   { id: 'h2', type: 'test', title: 'Controllo glicemia', provider: 'Farmacia Salute Più', date: '2026-03-15', result: '92 mg/dL - Normale', icon: '🧪' },
-  { id: 'h3', type: 'prescription', title: 'Prescrizione Omeprazolo', provider: 'Dott. Marco Benedetti', date: '2026-02-10', icon: '💊' },
+  { id: 'h3', type: 'prescription', title: 'Prescrizione Omeprazolo', provider: 'Studio Medico Demo', date: '2026-02-10', icon: '💊' },
   { id: 'h4', type: 'vaccine', title: 'Vaccino antinfluenzale', provider: 'Farmacia Centrale Vaccini', date: '2026-01-15', icon: '💉' },
   { id: 'h5', type: 'appointment', title: 'Consulenza nutrizionale', provider: 'NutriVita Studio', date: '2026-01-08', result: 'Piano alimentare aggiornato', icon: '🥗' },
   { id: 'h6', type: 'test', title: 'Emocromo completo', provider: 'Centro Diagnostico Rapido', date: '2025-12-20', result: 'Valori nella norma', icon: '🔬' },
-  { id: 'h7', type: 'appointment', title: 'RX Torace', provider: 'Ospedale San Raffaele', date: '2025-12-05', result: 'Nessuna anomalia', icon: '📷' },
-  { id: 'h8', type: 'vaccine', title: 'Richiamo tetano', provider: 'ASL Milano', date: '2025-09-10', icon: '💉' },
+  { id: 'h7', type: 'appointment', title: 'RX Torace', provider: 'Ospedale Demo', date: '2025-12-05', result: 'Nessuna anomalia', icon: '📷' },
+  { id: 'h8', type: 'vaccine', title: 'Richiamo tetano', provider: 'ASL Demo', date: '2025-09-10', icon: '💉' },
 ];
 
 const docTypeIcons: Record<string, typeof FileText> = {

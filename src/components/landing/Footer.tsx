@@ -57,8 +57,11 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="mt-10 border-t pt-8 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Bifase. Tutti i diritti riservati.
+        <div className="mt-10 border-t pt-8 text-center text-xs text-muted-foreground space-y-2">
+          <p className="font-medium text-foreground/80">
+            MVP dimostrativo sviluppato come Capstone Project. I dati presenti sono fittizi e utilizzati esclusivamente a scopo dimostrativo.
+          </p>
+          <p>© {new Date().getFullYear()} Bifase. Tutti i diritti riservati.</p>
         </div>
       </div>
     </footer>

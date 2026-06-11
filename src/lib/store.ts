@@ -149,7 +149,7 @@ const mockServices: Service[] = [
   {
     id: '7',
     name: 'Consulto medico generico',
-    providerName: 'Dott. Marco Benedetti',
+    providerName: 'Studio Medico Demo',
     location: 'Online',
     type: 'Telemedicina',
     price: 40,
@@ -218,8 +218,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       price: 75,
       commission: 75 * COMMISSION_RATE,
       status: 'confirmed',
-      patientName: 'Marco Rossi',
-      patientPhone: '+39 333 1234567',
+      patientName: 'Mario Rossi',
+      patientPhone: '000 0000000',
     },
     {
       id: 'pa2',
@@ -232,8 +232,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       price: 75,
       commission: 75 * COMMISSION_RATE,
       status: 'completed',
-      patientName: 'Giulia Bianchi',
-      patientPhone: '+39 338 7654321',
+      patientName: 'Laura Bianchi',
+      patientPhone: '000 0000000',
     },
     {
       id: 'pa3',
@@ -246,8 +246,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       price: 75,
       commission: 75 * COMMISSION_RATE,
       status: 'confirmed',
-      patientName: 'Luca Verdi',
-      patientPhone: '+39 340 9876543',
+      patientName: 'Utente Demo',
+      patientPhone: '000 0000000',
     },
   ],
 
@@ -286,7 +286,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     const newInvoice = createInvoice(
       newAppointment,
       user?.name || 'Cliente',
-      user?.email || 'cliente@email.com'
+      user?.email || 'demo@bifase.it'
     );
 
     set({
