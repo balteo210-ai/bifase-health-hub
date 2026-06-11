@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAppStore } from '@/lib/store';
 import BifaseLogo from '@/components/BifaseLogo';
+import DemoNotice from '@/components/DemoNotice';
 import { motion } from 'framer-motion';
 
 const Register = () => {
@@ -40,9 +41,10 @@ const Register = () => {
         <div className="rounded-3xl border border-border/60 bg-card p-8 shadow-xl" style={{ boxShadow: 'var(--shadow-elevated)' }}>
           <div className="mb-8"><BifaseLogo size="md" linkTo="/" /></div>
           <h1 className="mb-1 font-display text-2xl font-bold text-foreground">Crea un account</h1>
-          <p className="mb-6 text-sm text-muted-foreground">
-            Registrati come {role === 'citizen' ? 'cittadino' : 'operatore sanitario'}
+          <p className="mb-4 text-sm text-muted-foreground">
+            Registrazione demo come {role === 'citizen' ? 'cittadino' : 'operatore sanitario'}. Non inserire dati reali.
           </p>
+          <DemoNotice className="mb-5" />
           <form onSubmit={handleRegister} className="space-y-4">
             {role === 'citizen' ? (
               <div className="space-y-2">

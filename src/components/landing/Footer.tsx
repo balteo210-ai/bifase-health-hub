@@ -44,24 +44,28 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col items-center gap-6 md:items-end">
-            <div className="flex gap-8 text-sm">
-              <Link to="/" className="text-muted-foreground transition-colors hover:text-foreground">Chi siamo</Link>
-              <Link to="/" className="text-muted-foreground transition-colors hover:text-foreground">Contatti</Link>
-              <Link to="/" className="text-muted-foreground transition-colors hover:text-foreground">Privacy</Link>
+            <div className="flex flex-wrap justify-center gap-6 text-sm md:justify-end">
+              <Link to="/per-professionisti" className="text-muted-foreground transition-colors hover:text-foreground">Per Professionisti</Link>
+              <Link to="/privacy-demo-disclaimer" className="text-muted-foreground transition-colors hover:text-foreground">Privacy & Demo Disclaimer</Link>
             </div>
-            {/* Social CTA */}
             <div className="rounded-full border border-primary/20 bg-primary/[0.04] px-4 py-2">
               <p className="text-xs text-primary font-medium">
-                📲 Seguici sui social per novità e consigli sulla salute
+                🎓 MVP Capstone Project — Executive Master in Digital Marketing, Rome Business School
               </p>
             </div>
           </div>
         </div>
-        <div className="mt-10 border-t pt-8 text-center text-xs text-muted-foreground space-y-2">
-          <p className="font-medium text-foreground/80">
-            MVP dimostrativo sviluppato come Capstone Project. I dati presenti sono fittizi e utilizzati esclusivamente a scopo dimostrativo.
+        <div className="mt-10 border-t pt-8 text-center text-xs text-muted-foreground space-y-3">
+          <p className="font-medium text-foreground/80 max-w-4xl mx-auto leading-relaxed">
+            Bifase Health Hub è un MVP dimostrativo sviluppato come Capstone Project dell'Executive
+            Master in Digital Marketing presso Rome Business School. La piattaforma non è un servizio
+            sanitario attivo. I dati presenti sono fittizi e utilizzati esclusivamente a scopo
+            formativo e dimostrativo. Non inserire dati personali, sanitari o sensibili.
           </p>
-          <p>© {new Date().getFullYear()} Bifase. Tutti i diritti riservati.</p>
+          <p className="text-muted-foreground/80">
+            Progetto dimostrativo · Dati fittizi a scopo formativo · <Link to="/privacy-demo-disclaimer" className="underline hover:text-foreground">Privacy & Demo Disclaimer</Link>
+          </p>
+          <p>© {new Date().getFullYear()} Bifase Health Hub — MVP Capstone Project.</p>
         </div>
       </div>
     </footer>

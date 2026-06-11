@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAppStore } from '@/lib/store';
 import BifaseLogo from '@/components/BifaseLogo';
+import DemoNotice from '@/components/DemoNotice';
 import { motion } from 'framer-motion';
 
 const Login = () => {
@@ -12,8 +13,8 @@ const Login = () => {
   const role = (searchParams.get('role') as 'citizen' | 'provider') || 'citizen';
   const navigate = useNavigate();
   const login = useAppStore((s) => s.login);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('demo@bifase.it');
+  const [password, setPassword] = useState('demo123');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,10 +33,15 @@ const Login = () => {
         <div className="rounded-3xl border border-border/60 bg-card p-8 shadow-xl" style={{ boxShadow: 'var(--shadow-elevated)' }}>
           <div className="mb-8"><BifaseLogo size="md" linkTo="/" /></div>
           <h1 className="mb-1 font-display text-2xl font-bold text-foreground">Accedi</h1>
-          <p className="mb-6 text-sm text-muted-foreground">
-            Accedi come {role === 'citizen' ? 'cittadino' : 'operatore sanitario'}
+          <p className="mb-4 text-sm text-muted-foreground">
+            Accesso demo come {role === 'citizen' ? 'cittadino' : 'operatore sanitario'}. Non utilizzare credenziali reali.
           </p>
+          <DemoNotice className="mb-5" />
           <form onSubmit={handleLogin} className="space-y-4">
+            <div className="rounded-xl bg-muted/40 p-3 text-xs text-muted-foreground">
+              Credenziali demo precompilate:<br />
+              <strong className="text-foreground">demo@bifase.it</strong> / <strong className="text-foreground">demo123</strong>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input id="email" type="email" placeholder="tu@esempio.com" value={email} onChange={(e) => setEmail(e.target.value)} required className="h-11 rounded-xl" />

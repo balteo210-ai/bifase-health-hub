@@ -12,6 +12,7 @@ import CitizenDashboard from "./pages/CitizenDashboard";
 import ProviderDashboard from "./pages/ProviderDashboard";
 import ExplorePage from "./pages/ExplorePage";
 import BiPremiaPage from "./pages/BiPremiaPage";
+import PrivacyDisclaimer from "./pages/PrivacyDisclaimer";
 
 import PerProfessionisti from "./pages/PerProfessionisti";
 import TeleConsultoPage from "./pages/TeleConsultoPage";
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/per-professionisti" element={<PerProfessionisti />} />
           <Route path="/teleconsulto" element={<TeleConsultoPage />} />
           <Route path="/memocare" element={<MemoCarePage />} />
+          <Route path="/privacy-demo-disclaimer" element={<PrivacyDisclaimer />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
