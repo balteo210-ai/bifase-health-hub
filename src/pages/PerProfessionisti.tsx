@@ -25,7 +25,7 @@ const benefits = [
   { icon: Calendar, title: 'Agenda digitale completa', desc: 'Gestisci tutti i tuoi appuntamenti da un\'unica dashboard intuitiva' },
   { icon: Zap, title: 'Recupero slot intelligente', desc: 'Gli slot cancellati vengono automaticamente proposti ad altri pazienti in lista d\'attesa' },
   { icon: Users, title: 'Nuovi pazienti dalla tua zona', desc: 'Il tuo profilo è visibile a tutti i cittadini che cercano servizi sanitari vicino a loro' },
-  { icon: TrendingUp, title: 'Fino al 40% meno no-show', desc: 'Promemoria automatici via SMS e notifiche riducono drasticamente le assenze' },
+  { icon: TrendingUp, title: 'Riduzione dei no-show', desc: 'Promemoria automatici via SMS e notifiche aiutano a ridurre le assenze' },
   { icon: BarChart3, title: 'Analytics e statistiche', desc: 'Monitora il tuo tasso di occupazione, i ricavi e le performance nel tempo' },
   { icon: ShieldCheck, title: 'BiPremia — Fedeltà pazienti', desc: 'I tuoi pazienti accumulano punti ad ogni visita, incentivando il ritorno' },
 ];

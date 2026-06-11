@@ -86,7 +86,7 @@ const Hero = () => {
             </div>
             <div className="flex items-center gap-2">
               <Star className="h-4 w-4 text-primary" />
-              <span>Oltre 500 professionisti</span>
+              <span>Piattaforma demo per cittadini e operatori</span>
             </div>
           </motion.div>
         </div>

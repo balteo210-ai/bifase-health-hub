@@ -15,7 +15,7 @@ const TeleConsultoPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const serviceName = searchParams.get('service') || 'Teleconsulto Medico';
-  const providerName = searchParams.get('provider') || 'Dott. Marco Benedetti';
+  const providerName = searchParams.get('provider') || 'Studio Medico Demo';
 
   const [callState, setCallState] = useState<'waiting' | 'connecting' | 'active' | 'ended'>('waiting');
   const [videoOn, setVideoOn] = useState(true);
@@ -40,7 +40,7 @@ const TeleConsultoPage = () => {
       toast.success('Connessione stabilita!');
       // Simulate doctor messages
       setTimeout(() => {
-        setMessages((m) => [...m, { from: 'doctor', text: 'Buongiorno! Sono il Dott. Benedetti. Come posso aiutarla oggi?' }]);
+        setMessages((m) => [...m, { from: 'doctor', text: 'Buongiorno! Come posso aiutarla oggi?' }]);
       }, 3000);
     }, 2500);
   };
